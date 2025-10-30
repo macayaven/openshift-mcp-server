@@ -156,7 +156,7 @@ func GetDataScienceProjectCreateTool() Tool {
 					Type:        "string",
 					Description: "The namespace where to create the Data Science Project",
 				},
-				"display_name": {
+				"displayName": {
 					Type:        "string",
 					Description: "A display name for the Data Science Project (optional)",
 				},
@@ -342,7 +342,7 @@ func GetModelListTool() Tool {
 					Type:        "string",
 					Description: "The namespace to search for models (optional, defaults to all namespaces)",
 				},
-				"model_type": {
+				"modelType": {
 					Type:        "string",
 					Description: "Filter models by type (e.g., pytorch, tensorflow, sklearn)",
 				},
@@ -407,7 +407,7 @@ func GetModelCreateTool() Tool {
 					Type:        "string",
 					Description: "The namespace where to create the model",
 				},
-				"display_name": {
+				"displayName": {
 					Type:        "string",
 					Description: "A display name for the model (optional)",
 				},
@@ -415,11 +415,11 @@ func GetModelCreateTool() Tool {
 					Type:        "string",
 					Description: "A description for the model (optional)",
 				},
-				"model_type": {
+				"modelType": {
 					Type:        "string",
 					Description: "The model type (e.g., pytorch, tensorflow, sklearn)",
 				},
-				"framework_version": {
+				"frameworkVersion": {
 					Type:        "string",
 					Description: "The framework version (optional)",
 				},
@@ -446,7 +446,7 @@ func GetModelCreateTool() Tool {
 					},
 				},
 			},
-			Required: []string{"name", "namespace", "model_type", "format"},
+			Required: []string{"name", "namespace", "modelType", "format"},
 		},
 		Annotations: ToolAnnotations{
 			Title:           "Model: Create",
@@ -474,7 +474,7 @@ func GetModelUpdateTool() Tool {
 					Type:        "string",
 					Description: "The namespace of the model",
 				},
-				"display_name": {
+				"displayName": {
 					Type:        "string",
 					Description: "A display name for the model (optional)",
 				},
@@ -683,7 +683,7 @@ func GetExperimentCreateTool() Tool {
 					Type:        "string",
 					Description: "The namespace where to create the experiment",
 				},
-				"display_name": {
+				"displayName": {
 					Type:        "string",
 					Description: "Display name for the experiment (optional)",
 				},
@@ -843,7 +843,7 @@ func GetApplicationsListTool() Tool {
 					Type:        "string",
 					Description: "Filter by application status (optional)",
 				},
-				"app_type": {
+				"appType": {
 					Type:        "string",
 					Description: "Filter by application type (optional, e.g., 'Jupyter', 'CodeServer')",
 				},
@@ -904,7 +904,7 @@ func GetApplicationCreateTool() Tool {
 					Type:        "string",
 					Description: "The namespace where to create the application",
 				},
-				"display_name": {
+				"displayName": {
 					Type:        "string",
 					Description: "Display name for the application (optional)",
 				},
@@ -912,7 +912,7 @@ func GetApplicationCreateTool() Tool {
 					Type:        "string",
 					Description: "Description for the application (optional)",
 				},
-				"app_type": {
+				"appType": {
 					Type:        "string",
 					Description: "Application type (e.g., 'Jupyter', 'CodeServer')",
 				},
@@ -931,7 +931,7 @@ func GetApplicationCreateTool() Tool {
 					},
 				},
 			},
-			Required: []string{"name", "namespace", "app_type"},
+			Required: []string{"name", "namespace", "appType"},
 		},
 		Annotations: ToolAnnotations{
 			Title:           "Application: Create",
@@ -1171,7 +1171,7 @@ func GetPipelineCreateTool() Tool {
 					Type:        "string",
 					Description: "The namespace where to create the pipeline",
 				},
-				"display_name": {
+				"displayName": {
 					Type:        "string",
 					Description: "Display name for the pipeline (optional)",
 				},
@@ -1247,7 +1247,7 @@ func GetPipelineRunsListTool() Tool {
 					Type:        "string",
 					Description: "Namespace to filter pipeline runs (optional, defaults to all namespaces)",
 				},
-				"pipeline_name": {
+				"pipelineName": {
 					Type:        "string",
 					Description: "Filter by pipeline name (optional)",
 				},

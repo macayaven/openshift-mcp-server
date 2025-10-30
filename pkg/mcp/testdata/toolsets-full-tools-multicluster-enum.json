@@ -18,7 +18,7 @@
           "description": "Annotations to apply to the application (optional)",
           "type": "object"
         },
-        "app_type": {
+        "appType": {
           "description": "Application type (e.g., 'Jupyter', 'CodeServer')",
           "type": "string"
         },
@@ -34,7 +34,7 @@
           "description": "Description for the application (optional)",
           "type": "string"
         },
-        "display_name": {
+        "displayName": {
           "description": "Display name for the application (optional)",
           "type": "string"
         },
@@ -57,7 +57,7 @@
       "required": [
         "name",
         "namespace",
-        "app_type"
+        "appType"
       ]
     },
     "name": "application_create"
@@ -146,7 +146,7 @@
     "inputSchema": {
       "type": "object",
       "properties": {
-        "app_type": {
+        "appType": {
           "description": "Filter by application type (optional, e.g., 'Jupyter', 'CodeServer')",
           "type": "string"
         },
@@ -235,7 +235,7 @@
           "description": "A description for the Data Science Project (optional)",
           "type": "string"
         },
-        "display_name": {
+        "displayName": {
           "description": "A display name for the Data Science Project (optional)",
           "type": "string"
         },
@@ -421,7 +421,7 @@
           "description": "Description for the experiment (optional)",
           "type": "string"
         },
-        "display_name": {
+        "displayName": {
           "description": "Display name for the experiment (optional)",
           "type": "string"
         },
@@ -693,7 +693,7 @@
           "description": "A description for the model (optional)",
           "type": "string"
         },
-        "display_name": {
+        "displayName": {
           "description": "A display name for the model (optional)",
           "type": "string"
         },
@@ -701,7 +701,7 @@
           "description": "The model format (e.g., pickle, onnx, savedmodel)",
           "type": "string"
         },
-        "framework_version": {
+        "frameworkVersion": {
           "description": "The framework version (optional)",
           "type": "string"
         },
@@ -712,7 +712,7 @@
           "description": "Labels to apply to the model (optional)",
           "type": "object"
         },
-        "model_type": {
+        "modelType": {
           "description": "The model type (e.g., pytorch, tensorflow, sklearn)",
           "type": "string"
         },
@@ -732,7 +732,7 @@
       "required": [
         "name",
         "namespace",
-        "model_type",
+        "modelType",
         "format"
       ]
     },
@@ -841,7 +841,7 @@
           "description": "A description for the model (optional)",
           "type": "string"
         },
-        "display_name": {
+        "displayName": {
           "description": "A display name for the model (optional)",
           "type": "string"
         },
@@ -888,7 +888,7 @@
           ],
           "type": "string"
         },
-        "model_type": {
+        "modelType": {
           "description": "Filter models by type (e.g., pytorch, tensorflow, sklearn)",
           "type": "string"
         },
@@ -1032,7 +1032,7 @@
           "description": "Description for the pipeline (optional)",
           "type": "string"
         },
-        "display_name": {
+        "displayName": {
           "description": "Display name for the pipeline (optional)",
           "type": "string"
         },
@@ -1191,7 +1191,7 @@
           "description": "Namespace to filter pipeline runs (optional, defaults to all namespaces)",
           "type": "string"
         },
-        "pipeline_name": {
+        "pipelineName": {
           "description": "Filter by pipeline name (optional)",
           "type": "string"
         },

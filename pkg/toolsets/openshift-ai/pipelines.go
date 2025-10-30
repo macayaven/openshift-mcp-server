@@ -186,7 +186,7 @@ func (t *PipelinesToolset) handlePipelineCreate(params api.ToolHandlerParams) (*
 
 	name, _ := args["name"].(string)
 	namespace, _ := args["namespace"].(string)
-	displayName, _ := args["display_name"].(string)
+	displayName, _ := args["displayName"].(string)
 	description, _ := args["description"].(string)
 	labels, _ := args["labels"].(map[string]interface{})
 	annotations, _ := args["annotations"].(map[string]interface{})
@@ -316,7 +316,7 @@ func (t *PipelinesToolset) handlePipelineRunsList(params api.ToolHandlerParams) 
 	// Get namespace parameter (optional)
 	namespace, _ := args["namespace"].(string)
 	// Get pipeline name filter (optional)
-	pipelineName, _ := args["pipeline_name"].(string)
+	pipelineName, _ := args["pipelineName"].(string)
 	// Get status filter (optional)
 	status, _ := args["status"].(string)
 
@@ -338,7 +338,7 @@ func (t *PipelinesToolset) handlePipelineRunsList(params api.ToolHandlerParams) 
 		filters["status"] = status
 	}
 	if pipelineName != "" {
-		filters["pipeline_name"] = pipelineName
+		filters["pipelineName"] = pipelineName
 	}
 
 	// List pipeline runs
