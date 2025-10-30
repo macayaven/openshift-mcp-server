@@ -79,7 +79,7 @@ func (t *PipelinesToolset) handlePipelinesList(params api.ToolHandlerParams) (*a
 	status, _ := args["status"].(string)
 
 	// Get OpenShift AI client from Kubernetes manager
-	clientInterface, err := params.Kubernetes.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
+	clientInterface, err := params.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
 		return openshiftai.NewClient(cfg, nil)
 	})
 	if err != nil {
@@ -108,7 +108,7 @@ func (t *PipelinesToolset) handlePipelinesList(params api.ToolHandlerParams) (*a
 		response[i] = map[string]interface{}{
 			"name":         pipeline.Name,
 			"namespace":    pipeline.Namespace,
-			"display_name": pipeline.DisplayName,
+			"displayName": pipeline.DisplayName,
 			"description":  pipeline.Description,
 			"labels":       pipeline.Labels,
 			"annotations":  pipeline.Annotations,
@@ -145,7 +145,7 @@ func (t *PipelinesToolset) handlePipelineGet(params api.ToolHandlerParams) (*api
 	}
 
 	// Get OpenShift AI client from Kubernetes manager
-	clientInterface, err := params.Kubernetes.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
+	clientInterface, err := params.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
 		return openshiftai.NewClient(cfg, nil)
 	})
 	if err != nil {
@@ -164,7 +164,7 @@ func (t *PipelinesToolset) handlePipelineGet(params api.ToolHandlerParams) (*api
 	result := map[string]interface{}{
 		"name":         pipeline.Name,
 		"namespace":    pipeline.Namespace,
-		"display_name": pipeline.DisplayName,
+		"displayName": pipeline.DisplayName,
 		"description":  pipeline.Description,
 		"labels":       pipeline.Labels,
 		"annotations":  pipeline.Annotations,
@@ -186,7 +186,7 @@ func (t *PipelinesToolset) handlePipelineCreate(params api.ToolHandlerParams) (*
 
 	name, _ := args["name"].(string)
 	namespace, _ := args["namespace"].(string)
-	displayName, _ := args["display_name"].(string)
+	displayName, _ := args["displayName"].(string)
 	description, _ := args["description"].(string)
 	labels, _ := args["labels"].(map[string]interface{})
 	annotations, _ := args["annotations"].(map[string]interface{})
@@ -199,7 +199,7 @@ func (t *PipelinesToolset) handlePipelineCreate(params api.ToolHandlerParams) (*
 	}
 
 	// Get OpenShift AI client from Kubernetes manager
-	clientInterface, err := params.Kubernetes.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
+	clientInterface, err := params.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
 		return openshiftai.NewClient(cfg, nil)
 	})
 	if err != nil {
@@ -247,7 +247,7 @@ func (t *PipelinesToolset) handlePipelineCreate(params api.ToolHandlerParams) (*
 	result := map[string]interface{}{
 		"name":         createdPipeline.Name,
 		"namespace":    createdPipeline.Namespace,
-		"display_name": createdPipeline.DisplayName,
+		"displayName": createdPipeline.DisplayName,
 		"description":  createdPipeline.Description,
 		"labels":       createdPipeline.Labels,
 		"annotations":  createdPipeline.Annotations,
@@ -279,7 +279,7 @@ func (t *PipelinesToolset) handlePipelineDelete(params api.ToolHandlerParams) (*
 	}
 
 	// Get OpenShift AI client from Kubernetes manager
-	clientInterface, err := params.Kubernetes.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
+	clientInterface, err := params.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
 		return openshiftai.NewClient(cfg, nil)
 	})
 	if err != nil {
@@ -316,12 +316,12 @@ func (t *PipelinesToolset) handlePipelineRunsList(params api.ToolHandlerParams) 
 	// Get namespace parameter (optional)
 	namespace, _ := args["namespace"].(string)
 	// Get pipeline name filter (optional)
-	pipelineName, _ := args["pipeline_name"].(string)
+	pipelineName, _ := args["pipelineName"].(string)
 	// Get status filter (optional)
 	status, _ := args["status"].(string)
 
 	// Get OpenShift AI client from Kubernetes manager
-	clientInterface, err := params.Kubernetes.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
+	clientInterface, err := params.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
 		return openshiftai.NewClient(cfg, nil)
 	})
 	if err != nil {
@@ -338,7 +338,7 @@ func (t *PipelinesToolset) handlePipelineRunsList(params api.ToolHandlerParams) 
 		filters["status"] = status
 	}
 	if pipelineName != "" {
-		filters["pipeline_name"] = pipelineName
+		filters["pipelineName"] = pipelineName
 	}
 
 	// List pipeline runs
@@ -352,9 +352,9 @@ func (t *PipelinesToolset) handlePipelineRunsList(params api.ToolHandlerParams) 
 	for i, pipelineRun := range pipelineRuns {
 		response[i] = map[string]interface{}{
 			"name":          pipelineRun.Name,
-			"pipeline_name": pipelineRun.PipelineName,
+			"pipelineName": pipelineRun.PipelineName,
 			"namespace":     pipelineRun.Namespace,
-			"display_name":  pipelineRun.DisplayName,
+			"displayName":  pipelineRun.DisplayName,
 			"description":   pipelineRun.Description,
 			"labels":        pipelineRun.Labels,
 			"annotations":   pipelineRun.Annotations,
@@ -391,7 +391,7 @@ func (t *PipelinesToolset) handlePipelineRunGet(params api.ToolHandlerParams) (*
 	}
 
 	// Get OpenShift AI client from Kubernetes manager
-	clientInterface, err := params.Kubernetes.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
+	clientInterface, err := params.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
 		return openshiftai.NewClient(cfg, nil)
 	})
 	if err != nil {
@@ -409,9 +409,9 @@ func (t *PipelinesToolset) handlePipelineRunGet(params api.ToolHandlerParams) (*
 
 	result := map[string]interface{}{
 		"name":          pipelineRun.Name,
-		"pipeline_name": pipelineRun.PipelineName,
+		"pipelineName": pipelineRun.PipelineName,
 		"namespace":     pipelineRun.Namespace,
-		"display_name":  pipelineRun.DisplayName,
+		"displayName":  pipelineRun.DisplayName,
 		"description":   pipelineRun.Description,
 		"labels":        pipelineRun.Labels,
 		"annotations":   pipelineRun.Annotations,

@@ -26,7 +26,7 @@ type DataScienceProjectCreateRequest struct {
 	// Namespace where to create the DataScienceProject
 	Namespace string `json:"namespace"`
 	// Display name for the project (optional)
-	DisplayName *string `json:"display_name,omitempty"`
+	DisplayName *string `json:"displayName,omitempty"`
 	// Description for the project (optional)
 	Description *string `json:"description,omitempty"`
 	// Labels to apply to the project (optional)
@@ -50,7 +50,7 @@ type DataScienceProject struct {
 	// Namespace of the DataScienceProject
 	Namespace string `json:"namespace"`
 	// Display name of the project
-	DisplayName *string `json:"display_name,omitempty"`
+	DisplayName *string `json:"displayName,omitempty"`
 	// Description of the project
 	Description *string `json:"description,omitempty"`
 	// Labels applied to the project
@@ -98,6 +98,7 @@ func GetDataScienceProjectListTool() Tool {
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace to search for Data Science Projects (optional, defaults to all namespaces)",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 			},
 		},
@@ -122,10 +123,12 @@ func GetDataScienceProjectGetTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of the Data Science Project",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace of the Data Science Project",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 			},
 			Required: []string{"name", "namespace"},
@@ -151,12 +154,14 @@ func GetDataScienceProjectCreateTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of the Data Science Project",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace where to create the Data Science Project",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
-				"display_name": {
+				"displayName": {
 					Type:        "string",
 					Description: "A display name for the Data Science Project (optional)",
 				},
@@ -202,10 +207,12 @@ func GetDataScienceProjectDeleteTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of the Data Science Project",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace of the Data Science Project",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 			},
 			Required: []string{"name", "namespace"},
@@ -227,13 +234,13 @@ type Model struct {
 	// Namespace of the model
 	Namespace string `json:"namespace"`
 	// Display name of the model
-	DisplayName *string `json:"display_name,omitempty"`
+	DisplayName *string `json:"displayName,omitempty"`
 	// Description of the model
 	Description *string `json:"description,omitempty"`
 	// Model type (e.g., "pytorch", "tensorflow", "sklearn")
-	ModelType *string `json:"model_type,omitempty"`
+	ModelType *string `json:"modelType,omitempty"`
 	// Model framework version
-	FrameworkVersion *string `json:"framework_version,omitempty"`
+	FrameworkVersion *string `json:"frameworkVersion,omitempty"`
 	// Model format (e.g., "pickle", "onnx", "savedmodel")
 	Format *string `json:"format,omitempty"`
 	// Model size in bytes
@@ -269,7 +276,7 @@ type ModelListRequest struct {
 	// Namespace to filter models (optional, defaults to all namespaces)
 	Namespace *string `json:"namespace,omitempty"`
 	// Model type filter (optional)
-	ModelType *string `json:"model_type,omitempty"`
+	ModelType *string `json:"modelType,omitempty"`
 	// Status filter (optional)
 	Status *string `json:"status,omitempty"`
 }
@@ -289,13 +296,13 @@ type ModelCreateRequest struct {
 	// Namespace where to create the model
 	Namespace string `json:"namespace"`
 	// Display name for the model (optional)
-	DisplayName *string `json:"display_name,omitempty"`
+	DisplayName *string `json:"displayName,omitempty"`
 	// Description for the model (optional)
 	Description *string `json:"description,omitempty"`
 	// Model type (e.g., "pytorch", "tensorflow", "sklearn")
-	ModelType string `json:"model_type"`
+	ModelType string `json:"modelType"`
 	// Model framework version (optional)
-	FrameworkVersion *string `json:"framework_version,omitempty"`
+	FrameworkVersion *string `json:"frameworkVersion,omitempty"`
 	// Model format (e.g., "pickle", "onnx", "savedmodel")
 	Format string `json:"format"`
 	// Model version (optional)
@@ -313,7 +320,7 @@ type ModelUpdateRequest struct {
 	// Namespace of the model
 	Namespace string `json:"namespace"`
 	// Display name for the model (optional)
-	DisplayName *string `json:"display_name,omitempty"`
+	DisplayName *string `json:"displayName,omitempty"`
 	// Description for the model (optional)
 	Description *string `json:"description,omitempty"`
 	// Labels to apply to the model (optional)
@@ -341,14 +348,16 @@ func GetModelListTool() Tool {
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace to search for models (optional, defaults to all namespaces)",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
-				"model_type": {
+				"modelType": {
 					Type:        "string",
-					Description: "Filter models by type (e.g., pytorch, tensorflow, sklearn)",
+					Description: "Filter models by type",
+					Enum:        []any{"pytorch", "tensorflow", "sklearn", "onnx", "xgboost"},
 				},
 				"status": {
 					Type:        "string",
-					Description: "Filter models by status (e.g., Ready, Pending, Failed)",
+					Description: "Filter models by status (e.g., 'Ready', 'Pending', 'Failed')",
 				},
 			},
 		},
@@ -373,10 +382,12 @@ func GetModelGetTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of the model",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace of the model",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 			},
 			Required: []string{"name", "namespace"},
@@ -402,12 +413,14 @@ func GetModelCreateTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of the model",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace where to create the model",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
-				"display_name": {
+				"displayName": {
 					Type:        "string",
 					Description: "A display name for the model (optional)",
 				},
@@ -415,11 +428,11 @@ func GetModelCreateTool() Tool {
 					Type:        "string",
 					Description: "A description for the model (optional)",
 				},
-				"model_type": {
+				"modelType": {
 					Type:        "string",
 					Description: "The model type (e.g., pytorch, tensorflow, sklearn)",
 				},
-				"framework_version": {
+				"frameworkVersion": {
 					Type:        "string",
 					Description: "The framework version (optional)",
 				},
@@ -446,7 +459,7 @@ func GetModelCreateTool() Tool {
 					},
 				},
 			},
-			Required: []string{"name", "namespace", "model_type", "format"},
+			Required: []string{"name", "namespace", "modelType", "format"},
 		},
 		Annotations: ToolAnnotations{
 			Title:           "Model: Create",
@@ -469,12 +482,14 @@ func GetModelUpdateTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of the model",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace of the model",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
-				"display_name": {
+				"displayName": {
 					Type:        "string",
 					Description: "A display name for the model (optional)",
 				},
@@ -520,10 +535,12 @@ func GetModelDeleteTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of the model",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace of the model",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 			},
 			Required: []string{"name", "namespace"},
@@ -545,7 +562,7 @@ type Experiment struct {
 	// Namespace of experiment
 	Namespace string `json:"namespace"`
 	// Display name (optional)
-	DisplayName *string `json:"display_name,omitempty"`
+	DisplayName *string `json:"displayName,omitempty"`
 	// Description (optional)
 	Description *string `json:"description,omitempty"`
 	// Labels associated with experiment
@@ -593,7 +610,7 @@ type ExperimentCreateRequest struct {
 	// Namespace where to create the experiment
 	Namespace string `json:"namespace"`
 	// Display name for the experiment (optional)
-	DisplayName *string `json:"display_name,omitempty"`
+	DisplayName *string `json:"displayName,omitempty"`
 	// Description for the experiment (optional)
 	Description *string `json:"description,omitempty"`
 	// Labels to apply to the experiment (optional)
@@ -621,6 +638,7 @@ func GetExperimentsListTool() Tool {
 				"namespace": {
 					Type:        "string",
 					Description: "Namespace to filter experiments (optional, defaults to all namespaces)",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"status": {
 					Type:        "string",
@@ -649,10 +667,12 @@ func GetExperimentGetTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of the experiment",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace of the experiment",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 			},
 			Required: []string{"name", "namespace"},
@@ -678,12 +698,14 @@ func GetExperimentCreateTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of the experiment",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace where to create the experiment",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
-				"display_name": {
+				"displayName": {
 					Type:        "string",
 					Description: "Display name for the experiment (optional)",
 				},
@@ -729,10 +751,12 @@ func GetExperimentDeleteTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of experiment",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace of the experiment",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 			},
 			Required: []string{"name", "namespace"},
@@ -754,7 +778,7 @@ type Application struct {
 	// Namespace of application
 	Namespace string `json:"namespace"`
 	// Display name (optional)
-	DisplayName *string `json:"display_name,omitempty"`
+	DisplayName *string `json:"displayName,omitempty"`
 	// Description (optional)
 	Description *string `json:"description,omitempty"`
 	// Labels associated with the application
@@ -762,7 +786,7 @@ type Application struct {
 	// Annotations associated with the application
 	Annotations map[string]string `json:"annotations,omitempty"`
 	// Application type (e.g., "Jupyter", "CodeServer")
-	AppType string `json:"app_type,omitempty"`
+	AppType string `json:"appType,omitempty"`
 	// Application status
 	Status ApplicationStatus `json:"status"`
 }
@@ -776,7 +800,7 @@ type ApplicationStatus struct {
 	// Whether the application is ready
 	Ready bool `json:"ready"`
 	// Application type (e.g., "Jupyter", "CodeServer")
-	AppType *string `json:"app_type,omitempty"`
+	AppType *string `json:"appType,omitempty"`
 	// URL to access the application
 	URL *string `json:"url,omitempty"`
 	// Last time the application was updated
@@ -790,7 +814,7 @@ type ApplicationListRequest struct {
 	// Filter by status (optional)
 	Status *string `json:"status,omitempty"`
 	// Filter by application type (optional)
-	AppType *string `json:"app_type,omitempty"`
+	AppType *string `json:"appType,omitempty"`
 }
 
 // ApplicationGetRequest represents a request to get a specific application
@@ -808,11 +832,11 @@ type ApplicationCreateRequest struct {
 	// Namespace where to create the application
 	Namespace string `json:"namespace"`
 	// Display name for the application (optional)
-	DisplayName *string `json:"display_name,omitempty"`
+	DisplayName *string `json:"displayName,omitempty"`
 	// Description for the application (optional)
 	Description *string `json:"description,omitempty"`
 	// Application type (e.g., "Jupyter", "CodeServer")
-	AppType string `json:"app_type"`
+	AppType string `json:"appType"`
 	// Labels to apply to the application (optional)
 	Labels map[string]string `json:"labels,omitempty"`
 	// Annotations to apply to the application (optional)
@@ -838,14 +862,16 @@ func GetApplicationsListTool() Tool {
 				"namespace": {
 					Type:        "string",
 					Description: "Namespace to filter applications (optional, defaults to all namespaces)",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"status": {
 					Type:        "string",
-					Description: "Filter by application status (optional)",
+					Description: "Filter by application status (optional, e.g., 'Running', 'Pending', 'Failed')",
 				},
-				"app_type": {
+				"appType": {
 					Type:        "string",
-					Description: "Filter by application type (optional, e.g., 'Jupyter', 'CodeServer')",
+					Description: "Filter by application type (optional)",
+					Enum:        []any{"Jupyter", "CodeServer", "RStudio"},
 				},
 			},
 		},
@@ -870,10 +896,12 @@ func GetApplicationGetTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of the application",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace of the application",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 			},
 			Required: []string{"name", "namespace"},
@@ -898,13 +926,15 @@ func GetApplicationCreateTool() Tool {
 			Properties: map[string]*jsonschema.Schema{
 				"name": {
 					Type:        "string",
-					Description: "The name of the application",
+					Description: "The name of the application (must be a valid Kubernetes resource name)",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace where to create the application",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
-				"display_name": {
+				"displayName": {
 					Type:        "string",
 					Description: "Display name for the application (optional)",
 				},
@@ -912,9 +942,10 @@ func GetApplicationCreateTool() Tool {
 					Type:        "string",
 					Description: "Description for the application (optional)",
 				},
-				"app_type": {
+				"appType": {
 					Type:        "string",
-					Description: "Application type (e.g., 'Jupyter', 'CodeServer')",
+					Description: "Application type",
+					Enum:        []any{"Jupyter", "CodeServer", "RStudio"},
 				},
 				"labels": {
 					Type:        "object",
@@ -931,7 +962,7 @@ func GetApplicationCreateTool() Tool {
 					},
 				},
 			},
-			Required: []string{"name", "namespace", "app_type"},
+			Required: []string{"name", "namespace", "appType"},
 		},
 		Annotations: ToolAnnotations{
 			Title:           "Application: Create",
@@ -954,10 +985,12 @@ func GetApplicationDeleteTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of the application",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace of the application",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 			},
 			Required: []string{"name", "namespace"},
@@ -979,7 +1012,7 @@ type Pipeline struct {
 	// Namespace of pipeline
 	Namespace string `json:"namespace"`
 	// Display name (optional)
-	DisplayName *string `json:"display_name,omitempty"`
+	DisplayName *string `json:"displayName,omitempty"`
 	// Description (optional)
 	Description *string `json:"description,omitempty"`
 	// Labels associated with pipeline
@@ -1009,11 +1042,11 @@ type PipelineRun struct {
 	// Name of pipeline run
 	Name string `json:"name"`
 	// Pipeline name that this run belongs to
-	PipelineName string `json:"pipeline_name"`
+	PipelineName string `json:"pipelineName"`
 	// Namespace of pipeline run
 	Namespace string `json:"namespace"`
 	// Display name (optional)
-	DisplayName *string `json:"display_name,omitempty"`
+	DisplayName *string `json:"displayName,omitempty"`
 	// Description (optional)
 	Description *string `json:"description,omitempty"`
 	// Labels associated with pipeline run
@@ -1063,7 +1096,7 @@ type PipelineCreateRequest struct {
 	// Namespace where to create the pipeline
 	Namespace string `json:"namespace"`
 	// Display name for the pipeline (optional)
-	DisplayName *string `json:"display_name,omitempty"`
+	DisplayName *string `json:"displayName,omitempty"`
 	// Description for the pipeline (optional)
 	Description *string `json:"description,omitempty"`
 	// Labels to apply to the pipeline (optional)
@@ -1085,7 +1118,7 @@ type PipelineRunListRequest struct {
 	// Namespace to filter pipeline runs (optional, defaults to all namespaces)
 	Namespace *string `json:"namespace,omitempty"`
 	// Filter by pipeline name (optional)
-	PipelineName *string `json:"pipeline_name,omitempty"`
+	PipelineName *string `json:"pipelineName,omitempty"`
 	// Filter by status (optional)
 	Status *string `json:"status,omitempty"`
 }
@@ -1109,6 +1142,7 @@ func GetPipelinesListTool() Tool {
 				"namespace": {
 					Type:        "string",
 					Description: "Namespace to filter pipelines (optional, defaults to all namespaces)",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"status": {
 					Type:        "string",
@@ -1137,10 +1171,12 @@ func GetPipelineGetTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of the pipeline",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace of the pipeline",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 			},
 			Required: []string{"name", "namespace"},
@@ -1166,12 +1202,14 @@ func GetPipelineCreateTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of the pipeline",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace where to create the pipeline",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
-				"display_name": {
+				"displayName": {
 					Type:        "string",
 					Description: "Display name for the pipeline (optional)",
 				},
@@ -1217,10 +1255,12 @@ func GetPipelineDeleteTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of the pipeline",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace of the pipeline",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 			},
 			Required: []string{"name", "namespace"},
@@ -1246,8 +1286,9 @@ func GetPipelineRunsListTool() Tool {
 				"namespace": {
 					Type:        "string",
 					Description: "Namespace to filter pipeline runs (optional, defaults to all namespaces)",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
-				"pipeline_name": {
+				"pipelineName": {
 					Type:        "string",
 					Description: "Filter by pipeline name (optional)",
 				},
@@ -1278,10 +1319,12 @@ func GetPipelineRunGetTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of the pipeline run",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace of the pipeline run",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 			},
 			Required: []string{"name", "namespace"},

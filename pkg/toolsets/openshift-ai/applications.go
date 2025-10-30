@@ -66,10 +66,10 @@ func (t *ApplicationsToolset) handleApplicationsList(params api.ToolHandlerParam
 	// Get status filter (optional)
 	status, _ := args["status"].(string)
 	// Get app type filter (optional)
-	appType, _ := args["app_type"].(string)
+	appType, _ := args["appType"].(string)
 
 	// Get OpenShift AI client from Kubernetes manager
-	clientInterface, err := params.Kubernetes.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
+	clientInterface, err := params.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
 		return openshiftai.NewClient(cfg, nil)
 	})
 	if err != nil {
@@ -109,7 +109,7 @@ func (t *ApplicationsToolset) handleApplicationGet(params api.ToolHandlerParams)
 	}
 
 	// Get OpenShift AI client from Kubernetes manager
-	clientInterface, err := params.Kubernetes.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
+	clientInterface, err := params.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
 		return openshiftai.NewClient(cfg, nil)
 	})
 	if err != nil {
@@ -148,14 +148,14 @@ func (t *ApplicationsToolset) handleApplicationCreate(params api.ToolHandlerPara
 		return api.NewToolCallResult("", fmt.Errorf("namespace parameter is required")), nil
 	}
 
-	appType, ok := args["app_type"].(string)
+	appType, ok := args["appType"].(string)
 	if !ok {
-		return api.NewToolCallResult("", fmt.Errorf("app_type parameter is required")), nil
+		return api.NewToolCallResult("", fmt.Errorf("appType parameter is required")), nil
 	}
 
 	// Optional parameters
 	var displayName *string
-	if val, exists := args["display_name"]; exists {
+	if val, exists := args["displayName"]; exists {
 		if str, ok := val.(string); ok && str != "" {
 			displayName = &str
 		}
@@ -193,7 +193,7 @@ func (t *ApplicationsToolset) handleApplicationCreate(params api.ToolHandlerPara
 	}
 
 	// Get OpenShift AI client from Kubernetes manager
-	clientInterface, err := params.Kubernetes.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
+	clientInterface, err := params.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
 		return openshiftai.NewClient(cfg, nil)
 	})
 	if err != nil {
@@ -247,7 +247,7 @@ func (t *ApplicationsToolset) handleApplicationDelete(params api.ToolHandlerPara
 	}
 
 	// Get OpenShift AI client from Kubernetes manager
-	clientInterface, err := params.Kubernetes.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
+	clientInterface, err := params.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
 		return openshiftai.NewClient(cfg, nil)
 	})
 	if err != nil {

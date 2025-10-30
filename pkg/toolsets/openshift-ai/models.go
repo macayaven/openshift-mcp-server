@@ -70,12 +70,12 @@ func (t *ModelsToolset) handleModelsList(params api.ToolHandlerParams) (*api.Too
 	// Get namespace parameter (optional)
 	namespace, _ := args["namespace"].(string)
 	// Get model type filter (optional)
-	modelType, _ := args["model_type"].(string)
+	modelType, _ := args["modelType"].(string)
 	// Get status filter (optional)
 	status, _ := args["status"].(string)
 
 	// Get OpenShift AI client from Kubernetes manager
-	clientInterface, err := params.Kubernetes.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
+	clientInterface, err := params.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
 		return openshiftai.NewClient(cfg, nil)
 	})
 	if err != nil {
@@ -115,7 +115,7 @@ func (t *ModelsToolset) handleModelGet(params api.ToolHandlerParams) (*api.ToolC
 	}
 
 	// Get OpenShift AI client from Kubernetes manager
-	clientInterface, err := params.Kubernetes.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
+	clientInterface, err := params.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
 		return openshiftai.NewClient(cfg, nil)
 	})
 	if err != nil {
@@ -154,9 +154,9 @@ func (t *ModelsToolset) handleModelCreate(params api.ToolHandlerParams) (*api.To
 		return api.NewToolCallResult("", fmt.Errorf("namespace parameter is required")), nil
 	}
 
-	modelType, ok := args["model_type"].(string)
+	modelType, ok := args["modelType"].(string)
 	if !ok {
-		return api.NewToolCallResult("", fmt.Errorf("model_type parameter is required")), nil
+		return api.NewToolCallResult("", fmt.Errorf("modelType parameter is required")), nil
 	}
 
 	format, ok := args["format"].(string)
@@ -165,9 +165,9 @@ func (t *ModelsToolset) handleModelCreate(params api.ToolHandlerParams) (*api.To
 	}
 
 	// Get optional parameters
-	displayName, _ := args["display_name"].(string)
+	displayName, _ := args["displayName"].(string)
 	description, _ := args["description"].(string)
-	frameworkVersion, _ := args["framework_version"].(string)
+	frameworkVersion, _ := args["frameworkVersion"].(string)
 	version, _ := args["version"].(string)
 
 	var labels map[string]string
@@ -195,7 +195,7 @@ func (t *ModelsToolset) handleModelCreate(params api.ToolHandlerParams) (*api.To
 	}
 
 	// Get OpenShift AI client from Kubernetes manager
-	clientInterface, err := params.Kubernetes.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
+	clientInterface, err := params.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
 		return openshiftai.NewClient(cfg, nil)
 	})
 	if err != nil {
@@ -248,7 +248,7 @@ func (t *ModelsToolset) handleModelUpdate(params api.ToolHandlerParams) (*api.To
 	}
 
 	// Get optional parameters
-	displayName, _ := args["display_name"].(string)
+	displayName, _ := args["displayName"].(string)
 	description, _ := args["description"].(string)
 
 	var labels map[string]string
@@ -276,7 +276,7 @@ func (t *ModelsToolset) handleModelUpdate(params api.ToolHandlerParams) (*api.To
 	}
 
 	// Get OpenShift AI client from Kubernetes manager
-	clientInterface, err := params.Kubernetes.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
+	clientInterface, err := params.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
 		return openshiftai.NewClient(cfg, nil)
 	})
 	if err != nil {
@@ -325,7 +325,7 @@ func (t *ModelsToolset) handleModelDelete(params api.ToolHandlerParams) (*api.To
 	}
 
 	// Get OpenShift AI client from Kubernetes manager
-	clientInterface, err := params.Kubernetes.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
+	clientInterface, err := params.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
 		return openshiftai.NewClient(cfg, nil)
 	})
 	if err != nil {

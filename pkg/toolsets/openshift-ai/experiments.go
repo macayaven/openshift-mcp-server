@@ -67,7 +67,7 @@ func (t *ExperimentsToolset) handleExperimentsList(params api.ToolHandlerParams)
 	status, _ := args["status"].(string)
 
 	// Get OpenShift AI client from Kubernetes manager
-	clientInterface, err := params.Kubernetes.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
+	clientInterface, err := params.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
 		return openshiftai.NewClient(cfg, nil)
 	})
 	if err != nil {
@@ -107,7 +107,7 @@ func (t *ExperimentsToolset) handleExperimentGet(params api.ToolHandlerParams) (
 	}
 
 	// Get OpenShift AI client from Kubernetes manager
-	clientInterface, err := params.Kubernetes.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
+	clientInterface, err := params.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
 		return openshiftai.NewClient(cfg, nil)
 	})
 	if err != nil {
@@ -148,7 +148,7 @@ func (t *ExperimentsToolset) handleExperimentCreate(params api.ToolHandlerParams
 
 	// Optional parameters
 	var displayName *string
-	if val, exists := args["display_name"]; exists {
+	if val, exists := args["displayName"]; exists {
 		if str, ok := val.(string); ok && str != "" {
 			displayName = &str
 		}
@@ -186,7 +186,7 @@ func (t *ExperimentsToolset) handleExperimentCreate(params api.ToolHandlerParams
 	}
 
 	// Get OpenShift AI client from Kubernetes manager
-	clientInterface, err := params.Kubernetes.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
+	clientInterface, err := params.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
 		return openshiftai.NewClient(cfg, nil)
 	})
 	if err != nil {
@@ -240,7 +240,7 @@ func (t *ExperimentsToolset) handleExperimentDelete(params api.ToolHandlerParams
 	}
 
 	// Get OpenShift AI client from Kubernetes manager
-	clientInterface, err := params.Kubernetes.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
+	clientInterface, err := params.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
 		return openshiftai.NewClient(cfg, nil)
 	})
 	if err != nil {
