@@ -108,7 +108,7 @@ func (t *PipelinesToolset) handlePipelinesList(params api.ToolHandlerParams) (*a
 		response[i] = map[string]interface{}{
 			"name":         pipeline.Name,
 			"namespace":    pipeline.Namespace,
-			"display_name": pipeline.DisplayName,
+			"displayName": pipeline.DisplayName,
 			"description":  pipeline.Description,
 			"labels":       pipeline.Labels,
 			"annotations":  pipeline.Annotations,
@@ -164,7 +164,7 @@ func (t *PipelinesToolset) handlePipelineGet(params api.ToolHandlerParams) (*api
 	result := map[string]interface{}{
 		"name":         pipeline.Name,
 		"namespace":    pipeline.Namespace,
-		"display_name": pipeline.DisplayName,
+		"displayName": pipeline.DisplayName,
 		"description":  pipeline.Description,
 		"labels":       pipeline.Labels,
 		"annotations":  pipeline.Annotations,
@@ -247,7 +247,7 @@ func (t *PipelinesToolset) handlePipelineCreate(params api.ToolHandlerParams) (*
 	result := map[string]interface{}{
 		"name":         createdPipeline.Name,
 		"namespace":    createdPipeline.Namespace,
-		"display_name": createdPipeline.DisplayName,
+		"displayName": createdPipeline.DisplayName,
 		"description":  createdPipeline.Description,
 		"labels":       createdPipeline.Labels,
 		"annotations":  createdPipeline.Annotations,
@@ -352,9 +352,9 @@ func (t *PipelinesToolset) handlePipelineRunsList(params api.ToolHandlerParams) 
 	for i, pipelineRun := range pipelineRuns {
 		response[i] = map[string]interface{}{
 			"name":          pipelineRun.Name,
-			"pipeline_name": pipelineRun.PipelineName,
+			"pipelineName": pipelineRun.PipelineName,
 			"namespace":     pipelineRun.Namespace,
-			"display_name":  pipelineRun.DisplayName,
+			"displayName":  pipelineRun.DisplayName,
 			"description":   pipelineRun.Description,
 			"labels":        pipelineRun.Labels,
 			"annotations":   pipelineRun.Annotations,
@@ -409,9 +409,9 @@ func (t *PipelinesToolset) handlePipelineRunGet(params api.ToolHandlerParams) (*
 
 	result := map[string]interface{}{
 		"name":          pipelineRun.Name,
-		"pipeline_name": pipelineRun.PipelineName,
+		"pipelineName": pipelineRun.PipelineName,
 		"namespace":     pipelineRun.Namespace,
-		"display_name":  pipelineRun.DisplayName,
+		"displayName":  pipelineRun.DisplayName,
 		"description":   pipelineRun.Description,
 		"labels":        pipelineRun.Labels,
 		"annotations":   pipelineRun.Annotations,

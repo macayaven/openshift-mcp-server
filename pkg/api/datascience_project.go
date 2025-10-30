@@ -26,7 +26,7 @@ type DataScienceProjectCreateRequest struct {
 	// Namespace where to create the DataScienceProject
 	Namespace string `json:"namespace"`
 	// Display name for the project (optional)
-	DisplayName *string `json:"display_name,omitempty"`
+	DisplayName *string `json:"displayName,omitempty"`
 	// Description for the project (optional)
 	Description *string `json:"description,omitempty"`
 	// Labels to apply to the project (optional)
@@ -50,7 +50,7 @@ type DataScienceProject struct {
 	// Namespace of the DataScienceProject
 	Namespace string `json:"namespace"`
 	// Display name of the project
-	DisplayName *string `json:"display_name,omitempty"`
+	DisplayName *string `json:"displayName,omitempty"`
 	// Description of the project
 	Description *string `json:"description,omitempty"`
 	// Labels applied to the project
@@ -234,13 +234,13 @@ type Model struct {
 	// Namespace of the model
 	Namespace string `json:"namespace"`
 	// Display name of the model
-	DisplayName *string `json:"display_name,omitempty"`
+	DisplayName *string `json:"displayName,omitempty"`
 	// Description of the model
 	Description *string `json:"description,omitempty"`
 	// Model type (e.g., "pytorch", "tensorflow", "sklearn")
-	ModelType *string `json:"model_type,omitempty"`
+	ModelType *string `json:"modelType,omitempty"`
 	// Model framework version
-	FrameworkVersion *string `json:"framework_version,omitempty"`
+	FrameworkVersion *string `json:"frameworkVersion,omitempty"`
 	// Model format (e.g., "pickle", "onnx", "savedmodel")
 	Format *string `json:"format,omitempty"`
 	// Model size in bytes
@@ -276,7 +276,7 @@ type ModelListRequest struct {
 	// Namespace to filter models (optional, defaults to all namespaces)
 	Namespace *string `json:"namespace,omitempty"`
 	// Model type filter (optional)
-	ModelType *string `json:"model_type,omitempty"`
+	ModelType *string `json:"modelType,omitempty"`
 	// Status filter (optional)
 	Status *string `json:"status,omitempty"`
 }
@@ -296,13 +296,13 @@ type ModelCreateRequest struct {
 	// Namespace where to create the model
 	Namespace string `json:"namespace"`
 	// Display name for the model (optional)
-	DisplayName *string `json:"display_name,omitempty"`
+	DisplayName *string `json:"displayName,omitempty"`
 	// Description for the model (optional)
 	Description *string `json:"description,omitempty"`
 	// Model type (e.g., "pytorch", "tensorflow", "sklearn")
-	ModelType string `json:"model_type"`
+	ModelType string `json:"modelType"`
 	// Model framework version (optional)
-	FrameworkVersion *string `json:"framework_version,omitempty"`
+	FrameworkVersion *string `json:"frameworkVersion,omitempty"`
 	// Model format (e.g., "pickle", "onnx", "savedmodel")
 	Format string `json:"format"`
 	// Model version (optional)
@@ -320,7 +320,7 @@ type ModelUpdateRequest struct {
 	// Namespace of the model
 	Namespace string `json:"namespace"`
 	// Display name for the model (optional)
-	DisplayName *string `json:"display_name,omitempty"`
+	DisplayName *string `json:"displayName,omitempty"`
 	// Description for the model (optional)
 	Description *string `json:"description,omitempty"`
 	// Labels to apply to the model (optional)
@@ -562,7 +562,7 @@ type Experiment struct {
 	// Namespace of experiment
 	Namespace string `json:"namespace"`
 	// Display name (optional)
-	DisplayName *string `json:"display_name,omitempty"`
+	DisplayName *string `json:"displayName,omitempty"`
 	// Description (optional)
 	Description *string `json:"description,omitempty"`
 	// Labels associated with experiment
@@ -610,7 +610,7 @@ type ExperimentCreateRequest struct {
 	// Namespace where to create the experiment
 	Namespace string `json:"namespace"`
 	// Display name for the experiment (optional)
-	DisplayName *string `json:"display_name,omitempty"`
+	DisplayName *string `json:"displayName,omitempty"`
 	// Description for the experiment (optional)
 	Description *string `json:"description,omitempty"`
 	// Labels to apply to the experiment (optional)
@@ -778,7 +778,7 @@ type Application struct {
 	// Namespace of application
 	Namespace string `json:"namespace"`
 	// Display name (optional)
-	DisplayName *string `json:"display_name,omitempty"`
+	DisplayName *string `json:"displayName,omitempty"`
 	// Description (optional)
 	Description *string `json:"description,omitempty"`
 	// Labels associated with the application
@@ -786,7 +786,7 @@ type Application struct {
 	// Annotations associated with the application
 	Annotations map[string]string `json:"annotations,omitempty"`
 	// Application type (e.g., "Jupyter", "CodeServer")
-	AppType string `json:"app_type,omitempty"`
+	AppType string `json:"appType,omitempty"`
 	// Application status
 	Status ApplicationStatus `json:"status"`
 }
@@ -800,7 +800,7 @@ type ApplicationStatus struct {
 	// Whether the application is ready
 	Ready bool `json:"ready"`
 	// Application type (e.g., "Jupyter", "CodeServer")
-	AppType *string `json:"app_type,omitempty"`
+	AppType *string `json:"appType,omitempty"`
 	// URL to access the application
 	URL *string `json:"url,omitempty"`
 	// Last time the application was updated
@@ -814,7 +814,7 @@ type ApplicationListRequest struct {
 	// Filter by status (optional)
 	Status *string `json:"status,omitempty"`
 	// Filter by application type (optional)
-	AppType *string `json:"app_type,omitempty"`
+	AppType *string `json:"appType,omitempty"`
 }
 
 // ApplicationGetRequest represents a request to get a specific application
@@ -832,11 +832,11 @@ type ApplicationCreateRequest struct {
 	// Namespace where to create the application
 	Namespace string `json:"namespace"`
 	// Display name for the application (optional)
-	DisplayName *string `json:"display_name,omitempty"`
+	DisplayName *string `json:"displayName,omitempty"`
 	// Description for the application (optional)
 	Description *string `json:"description,omitempty"`
 	// Application type (e.g., "Jupyter", "CodeServer")
-	AppType string `json:"app_type"`
+	AppType string `json:"appType"`
 	// Labels to apply to the application (optional)
 	Labels map[string]string `json:"labels,omitempty"`
 	// Annotations to apply to the application (optional)
@@ -1012,7 +1012,7 @@ type Pipeline struct {
 	// Namespace of pipeline
 	Namespace string `json:"namespace"`
 	// Display name (optional)
-	DisplayName *string `json:"display_name,omitempty"`
+	DisplayName *string `json:"displayName,omitempty"`
 	// Description (optional)
 	Description *string `json:"description,omitempty"`
 	// Labels associated with pipeline
@@ -1042,11 +1042,11 @@ type PipelineRun struct {
 	// Name of pipeline run
 	Name string `json:"name"`
 	// Pipeline name that this run belongs to
-	PipelineName string `json:"pipeline_name"`
+	PipelineName string `json:"pipelineName"`
 	// Namespace of pipeline run
 	Namespace string `json:"namespace"`
 	// Display name (optional)
-	DisplayName *string `json:"display_name,omitempty"`
+	DisplayName *string `json:"displayName,omitempty"`
 	// Description (optional)
 	Description *string `json:"description,omitempty"`
 	// Labels associated with pipeline run
@@ -1096,7 +1096,7 @@ type PipelineCreateRequest struct {
 	// Namespace where to create the pipeline
 	Namespace string `json:"namespace"`
 	// Display name for the pipeline (optional)
-	DisplayName *string `json:"display_name,omitempty"`
+	DisplayName *string `json:"displayName,omitempty"`
 	// Description for the pipeline (optional)
 	Description *string `json:"description,omitempty"`
 	// Labels to apply to the pipeline (optional)
@@ -1118,7 +1118,7 @@ type PipelineRunListRequest struct {
 	// Namespace to filter pipeline runs (optional, defaults to all namespaces)
 	Namespace *string `json:"namespace,omitempty"`
 	// Filter by pipeline name (optional)
-	PipelineName *string `json:"pipeline_name,omitempty"`
+	PipelineName *string `json:"pipelineName,omitempty"`
 	// Filter by status (optional)
 	Status *string `json:"status,omitempty"`
 }
