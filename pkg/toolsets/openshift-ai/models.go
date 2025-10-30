@@ -156,7 +156,7 @@ func (t *ModelsToolset) handleModelCreate(params api.ToolHandlerParams) (*api.To
 
 	modelType, ok := args["modelType"].(string)
 	if !ok {
-		return api.NewToolCallResult("", fmt.Errorf("model_type parameter is required")), nil
+		return api.NewToolCallResult("", fmt.Errorf("modelType parameter is required")), nil
 	}
 
 	format, ok := args["format"].(string)
