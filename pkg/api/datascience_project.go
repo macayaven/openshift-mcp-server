@@ -98,7 +98,7 @@ func GetDataScienceProjectListTool() Tool {
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace to search for Data Science Projects (optional, defaults to all namespaces)",
-				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 			},
 		},
@@ -123,12 +123,12 @@ func GetDataScienceProjectGetTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of the Data Science Project",
-				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace of the Data Science Project",
-				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 			},
 			Required: []string{"name", "namespace"},
@@ -154,12 +154,12 @@ func GetDataScienceProjectCreateTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of the Data Science Project",
-				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace where to create the Data Science Project",
-				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"displayName": {
 					Type:        "string",
@@ -207,12 +207,12 @@ func GetDataScienceProjectDeleteTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of the Data Science Project",
-				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace of the Data Science Project",
-				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 			},
 			Required: []string{"name", "namespace"},
@@ -382,12 +382,12 @@ func GetModelGetTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of the model",
-				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace of the model",
-				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 			},
 			Required: []string{"name", "namespace"},
@@ -413,12 +413,12 @@ func GetModelCreateTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of the model",
-				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace where to create the model",
-				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"displayName": {
 					Type:        "string",
@@ -482,12 +482,12 @@ func GetModelUpdateTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of the model",
-				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace of the model",
-				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"displayName": {
 					Type:        "string",
@@ -535,12 +535,12 @@ func GetModelDeleteTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of the model",
-				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace of the model",
-				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 			},
 			Required: []string{"name", "namespace"},
@@ -638,7 +638,7 @@ func GetExperimentsListTool() Tool {
 				"namespace": {
 					Type:        "string",
 					Description: "Namespace to filter experiments (optional, defaults to all namespaces)",
-				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"status": {
 					Type:        "string",
@@ -667,12 +667,12 @@ func GetExperimentGetTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of the experiment",
-				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace of the experiment",
-				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 			},
 			Required: []string{"name", "namespace"},
@@ -698,12 +698,12 @@ func GetExperimentCreateTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of the experiment",
-				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace where to create the experiment",
-				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"displayName": {
 					Type:        "string",
@@ -751,12 +751,12 @@ func GetExperimentDeleteTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of experiment",
-				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace of the experiment",
-				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 			},
 			Required: []string{"name", "namespace"},
@@ -1142,7 +1142,7 @@ func GetPipelinesListTool() Tool {
 				"namespace": {
 					Type:        "string",
 					Description: "Namespace to filter pipelines (optional, defaults to all namespaces)",
-				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"status": {
 					Type:        "string",
@@ -1171,12 +1171,12 @@ func GetPipelineGetTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of the pipeline",
-				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace of the pipeline",
-				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 			},
 			Required: []string{"name", "namespace"},
@@ -1202,12 +1202,12 @@ func GetPipelineCreateTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of the pipeline",
-				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace where to create the pipeline",
-				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"displayName": {
 					Type:        "string",
@@ -1255,12 +1255,12 @@ func GetPipelineDeleteTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of the pipeline",
-				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace of the pipeline",
-				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 			},
 			Required: []string{"name", "namespace"},
@@ -1286,7 +1286,7 @@ func GetPipelineRunsListTool() Tool {
 				"namespace": {
 					Type:        "string",
 					Description: "Namespace to filter pipeline runs (optional, defaults to all namespaces)",
-				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"pipelineName": {
 					Type:        "string",
@@ -1319,12 +1319,12 @@ func GetPipelineRunGetTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of the pipeline run",
-				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace of the pipeline run",
-				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 			},
 			Required: []string{"name", "namespace"},
