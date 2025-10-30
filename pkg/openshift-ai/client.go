@@ -116,6 +116,24 @@ func (c *Client) GetGVR(resource string) (schema.GroupVersionResource, error) {
 			Version:  "v1",
 			Resource: "datasciencepipelinesapplications",
 		}, nil
+	case "applications":
+		return schema.GroupVersionResource{
+			Group:    "app.opendatahub.io",
+			Version:  "v1",
+			Resource: "applications",
+		}, nil
+	case "models":
+		return schema.GroupVersionResource{
+			Group:    "model.opendatahub.io",
+			Version:  "v1",
+			Resource: "models",
+		}, nil
+	case "experiments":
+		return schema.GroupVersionResource{
+			Group:    "datasciencepipelines.opendatahub.io",
+			Version:  "v1",
+			Resource: "experiments",
+		}, nil
 	case "notebooks":
 		return schema.GroupVersionResource{
 			Group:    "kubeflow.org",

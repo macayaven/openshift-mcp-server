@@ -75,7 +75,7 @@ func (t *ModelsToolset) handleModelsList(params api.ToolHandlerParams) (*api.Too
 	status, _ := args["status"].(string)
 
 	// Get OpenShift AI client from Kubernetes manager
-	clientInterface, err := params.Kubernetes.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
+	clientInterface, err := params.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
 		return openshiftai.NewClient(cfg, nil)
 	})
 	if err != nil {
@@ -115,7 +115,7 @@ func (t *ModelsToolset) handleModelGet(params api.ToolHandlerParams) (*api.ToolC
 	}
 
 	// Get OpenShift AI client from Kubernetes manager
-	clientInterface, err := params.Kubernetes.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
+	clientInterface, err := params.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
 		return openshiftai.NewClient(cfg, nil)
 	})
 	if err != nil {
@@ -195,7 +195,7 @@ func (t *ModelsToolset) handleModelCreate(params api.ToolHandlerParams) (*api.To
 	}
 
 	// Get OpenShift AI client from Kubernetes manager
-	clientInterface, err := params.Kubernetes.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
+	clientInterface, err := params.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
 		return openshiftai.NewClient(cfg, nil)
 	})
 	if err != nil {
@@ -276,7 +276,7 @@ func (t *ModelsToolset) handleModelUpdate(params api.ToolHandlerParams) (*api.To
 	}
 
 	// Get OpenShift AI client from Kubernetes manager
-	clientInterface, err := params.Kubernetes.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
+	clientInterface, err := params.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
 		return openshiftai.NewClient(cfg, nil)
 	})
 	if err != nil {
@@ -325,7 +325,7 @@ func (t *ModelsToolset) handleModelDelete(params api.ToolHandlerParams) (*api.To
 	}
 
 	// Get OpenShift AI client from Kubernetes manager
-	clientInterface, err := params.Kubernetes.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
+	clientInterface, err := params.GetOrCreateOpenShiftAIClient(func(cfg *rest.Config, config interface{}) (interface{}, error) {
 		return openshiftai.NewClient(cfg, nil)
 	})
 	if err != nil {
