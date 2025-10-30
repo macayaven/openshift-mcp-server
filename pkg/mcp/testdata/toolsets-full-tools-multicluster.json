@@ -19,7 +19,12 @@
           "type": "object"
         },
         "appType": {
-          "description": "Application type (e.g., 'Jupyter', 'CodeServer')",
+          "description": "Application type",
+          "enum": [
+            "Jupyter",
+            "CodeServer",
+            "RStudio"
+          ],
           "type": "string"
         },
         "context": {
@@ -42,11 +47,13 @@
           "type": "object"
         },
         "name": {
-          "description": "The name of the application",
+          "description": "The name of the application (must be a valid Kubernetes resource name)",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
         "namespace": {
           "description": "The namespace where to create the application",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         }
       },
@@ -76,10 +83,12 @@
         },
         "name": {
           "description": "The name of the application",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
         "namespace": {
           "description": "The namespace of the application",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         }
       },
@@ -108,10 +117,12 @@
         },
         "name": {
           "description": "The name of the application",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
         "namespace": {
           "description": "The namespace of the application",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         }
       },
@@ -135,7 +146,12 @@
       "type": "object",
       "properties": {
         "appType": {
-          "description": "Filter by application type (optional, e.g., 'Jupyter', 'CodeServer')",
+          "description": "Filter by application type (optional)",
+          "enum": [
+            "Jupyter",
+            "CodeServer",
+            "RStudio"
+          ],
           "type": "string"
         },
         "context": {
@@ -144,10 +160,11 @@
         },
         "namespace": {
           "description": "Namespace to filter applications (optional, defaults to all namespaces)",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
         "status": {
-          "description": "Filter by application status (optional)",
+          "description": "Filter by application status (optional, e.g., 'Running', 'Pending', 'Failed')",
           "type": "string"
         }
       }
@@ -228,10 +245,12 @@
         },
         "name": {
           "description": "The name of the Data Science Project",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
         "namespace": {
           "description": "The namespace where to create the Data Science Project",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         }
       },
@@ -260,10 +279,12 @@
         },
         "name": {
           "description": "The name of the Data Science Project",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
         "namespace": {
           "description": "The namespace of the Data Science Project",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         }
       },
@@ -292,10 +313,12 @@
         },
         "name": {
           "description": "The name of the Data Science Project",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
         "namespace": {
           "description": "The namespace of the Data Science Project",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         }
       },
@@ -324,6 +347,7 @@
         },
         "namespace": {
           "description": "The namespace to search for Data Science Projects (optional, defaults to all namespaces)",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         }
       }
@@ -394,10 +418,12 @@
         },
         "name": {
           "description": "The name of the experiment",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
         "namespace": {
           "description": "The namespace where to create the experiment",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         }
       },
@@ -426,10 +452,12 @@
         },
         "name": {
           "description": "The name of experiment",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
         "namespace": {
           "description": "The namespace of the experiment",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         }
       },
@@ -458,10 +486,12 @@
         },
         "name": {
           "description": "The name of the experiment",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
         "namespace": {
           "description": "The namespace of the experiment",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         }
       },
@@ -490,6 +520,7 @@
         },
         "namespace": {
           "description": "Namespace to filter experiments (optional, defaults to all namespaces)",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
         "status": {
@@ -650,10 +681,12 @@
         },
         "name": {
           "description": "The name of the model",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
         "namespace": {
           "description": "The namespace where to create the model",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
         "version": {
@@ -688,10 +721,12 @@
         },
         "name": {
           "description": "The name of the model",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
         "namespace": {
           "description": "The namespace of the model",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         }
       },
@@ -720,10 +755,12 @@
         },
         "name": {
           "description": "The name of the model",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
         "namespace": {
           "description": "The namespace of the model",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         }
       },
@@ -774,10 +811,12 @@
         },
         "name": {
           "description": "The name of the model",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
         "namespace": {
           "description": "The namespace of the model",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         }
       },
@@ -805,15 +844,23 @@
           "type": "string"
         },
         "modelType": {
-          "description": "Filter models by type (e.g., pytorch, tensorflow, sklearn)",
+          "description": "Filter models by type",
+          "enum": [
+            "pytorch",
+            "tensorflow",
+            "sklearn",
+            "onnx",
+            "xgboost"
+          ],
           "type": "string"
         },
         "namespace": {
           "description": "The namespace to search for models (optional, defaults to all namespaces)",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
         "status": {
-          "description": "Filter models by status (e.g., Ready, Pending, Failed)",
+          "description": "Filter models by status (e.g., 'Ready', 'Pending', 'Failed')",
           "type": "string"
         }
       }
@@ -945,10 +992,12 @@
         },
         "name": {
           "description": "The name of the pipeline",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
         "namespace": {
           "description": "The namespace where to create the pipeline",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         }
       },
@@ -977,10 +1026,12 @@
         },
         "name": {
           "description": "The name of the pipeline",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
         "namespace": {
           "description": "The namespace of the pipeline",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         }
       },
@@ -1009,10 +1060,12 @@
         },
         "name": {
           "description": "The name of the pipeline",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
         "namespace": {
           "description": "The namespace of the pipeline",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         }
       },
@@ -1041,10 +1094,12 @@
         },
         "name": {
           "description": "The name of the pipeline run",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
         "namespace": {
           "description": "The namespace of the pipeline run",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         }
       },
@@ -1073,6 +1128,7 @@
         },
         "namespace": {
           "description": "Namespace to filter pipeline runs (optional, defaults to all namespaces)",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
         "pipelineName": {
@@ -1105,6 +1161,7 @@
         },
         "namespace": {
           "description": "Namespace to filter pipelines (optional, defaults to all namespaces)",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
         "status": {

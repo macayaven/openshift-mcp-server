@@ -98,6 +98,7 @@ func GetDataScienceProjectListTool() Tool {
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace to search for Data Science Projects (optional, defaults to all namespaces)",
+				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 			},
 		},
@@ -122,10 +123,12 @@ func GetDataScienceProjectGetTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of the Data Science Project",
+				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace of the Data Science Project",
+				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 			},
 			Required: []string{"name", "namespace"},
@@ -151,10 +154,12 @@ func GetDataScienceProjectCreateTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of the Data Science Project",
+				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace where to create the Data Science Project",
+				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"displayName": {
 					Type:        "string",
@@ -202,10 +207,12 @@ func GetDataScienceProjectDeleteTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of the Data Science Project",
+				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace of the Data Science Project",
+				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 			},
 			Required: []string{"name", "namespace"},
@@ -341,14 +348,16 @@ func GetModelListTool() Tool {
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace to search for models (optional, defaults to all namespaces)",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"modelType": {
 					Type:        "string",
-					Description: "Filter models by type (e.g., pytorch, tensorflow, sklearn)",
+					Description: "Filter models by type",
+					Enum:        []any{"pytorch", "tensorflow", "sklearn", "onnx", "xgboost"},
 				},
 				"status": {
 					Type:        "string",
-					Description: "Filter models by status (e.g., Ready, Pending, Failed)",
+					Description: "Filter models by status (e.g., 'Ready', 'Pending', 'Failed')",
 				},
 			},
 		},
@@ -373,10 +382,12 @@ func GetModelGetTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of the model",
+				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace of the model",
+				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 			},
 			Required: []string{"name", "namespace"},
@@ -402,10 +413,12 @@ func GetModelCreateTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of the model",
+				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace where to create the model",
+				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"displayName": {
 					Type:        "string",
@@ -469,10 +482,12 @@ func GetModelUpdateTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of the model",
+				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace of the model",
+				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"displayName": {
 					Type:        "string",
@@ -520,10 +535,12 @@ func GetModelDeleteTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of the model",
+				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace of the model",
+				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 			},
 			Required: []string{"name", "namespace"},
@@ -621,6 +638,7 @@ func GetExperimentsListTool() Tool {
 				"namespace": {
 					Type:        "string",
 					Description: "Namespace to filter experiments (optional, defaults to all namespaces)",
+				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"status": {
 					Type:        "string",
@@ -649,10 +667,12 @@ func GetExperimentGetTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of the experiment",
+				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace of the experiment",
+				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 			},
 			Required: []string{"name", "namespace"},
@@ -678,10 +698,12 @@ func GetExperimentCreateTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of the experiment",
+				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace where to create the experiment",
+				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"displayName": {
 					Type:        "string",
@@ -729,10 +751,12 @@ func GetExperimentDeleteTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of experiment",
+				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace of the experiment",
+				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 			},
 			Required: []string{"name", "namespace"},
@@ -838,14 +862,16 @@ func GetApplicationsListTool() Tool {
 				"namespace": {
 					Type:        "string",
 					Description: "Namespace to filter applications (optional, defaults to all namespaces)",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"status": {
 					Type:        "string",
-					Description: "Filter by application status (optional)",
+					Description: "Filter by application status (optional, e.g., 'Running', 'Pending', 'Failed')",
 				},
 				"appType": {
 					Type:        "string",
-					Description: "Filter by application type (optional, e.g., 'Jupyter', 'CodeServer')",
+					Description: "Filter by application type (optional)",
+					Enum:        []any{"Jupyter", "CodeServer", "RStudio"},
 				},
 			},
 		},
@@ -870,10 +896,12 @@ func GetApplicationGetTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of the application",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace of the application",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 			},
 			Required: []string{"name", "namespace"},
@@ -898,11 +926,13 @@ func GetApplicationCreateTool() Tool {
 			Properties: map[string]*jsonschema.Schema{
 				"name": {
 					Type:        "string",
-					Description: "The name of the application",
+					Description: "The name of the application (must be a valid Kubernetes resource name)",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace where to create the application",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"displayName": {
 					Type:        "string",
@@ -914,7 +944,8 @@ func GetApplicationCreateTool() Tool {
 				},
 				"appType": {
 					Type:        "string",
-					Description: "Application type (e.g., 'Jupyter', 'CodeServer')",
+					Description: "Application type",
+					Enum:        []any{"Jupyter", "CodeServer", "RStudio"},
 				},
 				"labels": {
 					Type:        "object",
@@ -954,10 +985,12 @@ func GetApplicationDeleteTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of the application",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace of the application",
+					Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 			},
 			Required: []string{"name", "namespace"},
@@ -1109,6 +1142,7 @@ func GetPipelinesListTool() Tool {
 				"namespace": {
 					Type:        "string",
 					Description: "Namespace to filter pipelines (optional, defaults to all namespaces)",
+				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"status": {
 					Type:        "string",
@@ -1137,10 +1171,12 @@ func GetPipelineGetTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of the pipeline",
+				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace of the pipeline",
+				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 			},
 			Required: []string{"name", "namespace"},
@@ -1166,10 +1202,12 @@ func GetPipelineCreateTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of the pipeline",
+				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace where to create the pipeline",
+				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"displayName": {
 					Type:        "string",
@@ -1217,10 +1255,12 @@ func GetPipelineDeleteTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of the pipeline",
+				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace of the pipeline",
+				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 			},
 			Required: []string{"name", "namespace"},
@@ -1246,6 +1286,7 @@ func GetPipelineRunsListTool() Tool {
 				"namespace": {
 					Type:        "string",
 					Description: "Namespace to filter pipeline runs (optional, defaults to all namespaces)",
+				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"pipelineName": {
 					Type:        "string",
@@ -1278,10 +1319,12 @@ func GetPipelineRunGetTool() Tool {
 				"name": {
 					Type:        "string",
 					Description: "The name of the pipeline run",
+				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 				"namespace": {
 					Type:        "string",
 					Description: "The namespace of the pipeline run",
+				Pattern:     "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
 				},
 			},
 			Required: []string{"name", "namespace"},
