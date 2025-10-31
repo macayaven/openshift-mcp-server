@@ -6,9 +6,13 @@ on:
       - main
     tags:
       - '*'
+  workflow_dispatch:  # Allow manual triggering
 
 env:
-  IMAGE_NAME: quay.io/manusa/kubernetes_mcp_server
+  # Fork attribution: This is a fork of containers/kubernetes-mcp-server enhanced with OpenShift AI support
+  # Original project: https://github.com/containers/kubernetes-mcp-server by Marc Nuri
+  # This fork adds OpenShift AI capabilities while maintaining full compatibility with the original
+  IMAGE_NAME: quay.io/macayaven/kubernetes_mcp_server_openshift_ai
   TAG: ${{ github.ref_name == 'main' && 'latest' || github.ref_type == 'tag' && github.ref_name && startsWith(github.ref_name, 'v') && github.ref_name || 'unknown' }}
 
 jobs:
@@ -32,6 +36,7 @@ jobs:
           sudo apt-get install -y podman
       - name: Quay Login
         run: |
+          # Using fork maintainer's registry credentials
           echo ${{ secrets.QUAY_PASSWORD }} | podman login quay.io -u ${{ secrets.QUAY_USERNAME }} --password-stdin
       - name: Build Image
         run: |
@@ -52,6 +57,7 @@ jobs:
     steps:
       - name: Quay Login
         run: |
+          # Using fork maintainer's registry credentials
           echo ${{ secrets.QUAY_PASSWORD }} | podman login quay.io -u ${{ secrets.QUAY_USERNAME }} --password-stdin
       - name: Create Manifest
         run: |

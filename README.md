@@ -1,5 +1,13 @@
 # OpenShift MCP Server
 
+> **🍴 Fork Notice**: This is a fork of [containers/kubernetes-mcp-server](https://github.com/containers/kubernetes-mcp-server) by Marc Nuri, enhanced with **OpenShift AI** support.
+> 
+> **Original Project**: A powerful Kubernetes [Model Context Protocol (MCP)](https://blog.marcnuri.com/model-context-protocol-mcp-introduction) server implementation.
+> 
+> **This Fork**: Adds comprehensive OpenShift AI capabilities while maintaining full compatibility with the original kubernetes-mcp-server functionality.
+> 
+> **🎯 Learning Phase**: This fork is actively developed as part of a learning journey. While thoroughly tested, please report any issues encountered.
+
 OpenShift MCP Server is currently under development.
 
 ## ✨ Features <a id="features"></a>
@@ -22,6 +30,12 @@ A powerful and flexible Kubernetes [Model Context Protocol (MCP)](https://blog.m
 - **✅ Namespaces**: List Kubernetes Namespaces.
 - **✅ Events**: View Kubernetes events in all namespaces or in a specific namespace.
 - **✅ Projects**: List OpenShift Projects.
+- **🤖 OpenShift AI** (Fork Enhancement):
+    - **Data Science Projects**: List, get, create, and delete Data Science Projects
+    - **Models**: Manage ML models with list, get, create, and delete operations
+    - **Applications**: Handle Data Science applications lifecycle
+    - **Experiments**: Track and manage ML experiments
+    - **Pipelines**: Manage Data Science pipelines and workflows
 - **☸️ Helm**:
     - **Install** a Helm chart in the current or provided namespace.
     - **List** Helm releases in all namespaces or in a specific namespace.
@@ -398,3 +412,59 @@ make build
 # Run the Kubernetes MCP server with mcp-inspector
 npx @modelcontextprotocol/inspector@latest $(pwd)/kubernetes-mcp-server
 ```
+
+## 🍴 Fork Attribution & Etiquette <a id="fork-attribution"></a>
+
+### Original Project
+This project is a fork of [containers/kubernetes-mcp-server](https://github.com/containers/kubernetes-mcp-server) by **Marc Nuri**.
+
+- **Original Author**: Marc Nuri
+- **Original Repository**: https://github.com/containers/kubernetes-mcp-server
+- **License**: Apache License 2.0 (preserved from original)
+
+### This Fork's Purpose
+This fork enhances the original kubernetes-mcp-server with **OpenShift AI** support while maintaining full backward compatibility.
+
+**Enhancements Added**:
+- 🤖 **OpenShift AI Toolset**: Complete integration with OpenShift AI/Red Hat OpenShift Data Science
+- 📊 **Data Science Projects**: Manage Data Science Projects lifecycle
+- 🤖 **Models**: ML model management and operations
+- 🚀 **Applications**: Data Science application handling
+- 🧪 **Experiments**: ML experiment tracking
+- ⚡ **Pipelines**: Data Science pipeline management
+
+### Development Philosophy
+- **🎯 Learning Phase**: This fork is developed as part of a learning journey
+- **🔧 Compatibility**: Maintains 100% compatibility with original kubernetes-mcp-server
+- **📝 Attribution**: All original work is properly attributed
+- **🤝 Collaboration**: Open to contributions and feedback
+- **🐛 Issue Reporting**: Please report issues encountered during usage
+
+### Fork Etiquette Followed
+1. **✅ Proper Attribution**: Original project and author clearly credited
+2. **✅ License Preservation**: Original Apache License 2.0 maintained
+3. **✅ Clear Documentation**: All changes and enhancements documented
+4. **✅ Separate Distribution**: Uses different package names to avoid confusion
+5. **✅ Open Development**: All changes visible and properly committed
+6. **✅ Learning Focus**: Clear indication of learning/development status
+
+### Installation Differences
+- **Original**: `kubernetes-mcp-server` (npm), `quay.io/manusa/kubernetes_mcp_server` (container)
+- **This Fork**: `kubernetes-mcp-server-openshift-ai` (npm), `quay.io/macayaven/kubernetes_mcp_server_openshift_ai` (container)
+
+### Contributing to This Fork
+While this is a learning project, contributions are welcome! Please:
+1. Clearly indicate the purpose of your contribution
+2. Follow the existing code style and patterns
+3. Add appropriate tests for new functionality
+4. Update documentation as needed
+
+### Reporting Issues
+If you encounter issues with this fork:
+1. **Original Functionality**: Check if issue exists in upstream project first
+2. **OpenShift AI Features**: Report issues in this repository
+3. **Learning Phase**: Be patient - this is actively developed and improved
+
+---
+
+**Thank you to Marc Nuri and the Kubernetes community for the excellent foundation!** 🙏

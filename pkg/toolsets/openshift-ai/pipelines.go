@@ -106,13 +106,13 @@ func (t *PipelinesToolset) handlePipelinesList(params api.ToolHandlerParams) (*a
 	response := make([]map[string]interface{}, len(pipelines))
 	for i, pipeline := range pipelines {
 		response[i] = map[string]interface{}{
-			"name":         pipeline.Name,
-			"namespace":    pipeline.Namespace,
+			"name":        pipeline.Name,
+			"namespace":   pipeline.Namespace,
 			"displayName": pipeline.DisplayName,
-			"description":  pipeline.Description,
-			"labels":       pipeline.Labels,
-			"annotations":  pipeline.Annotations,
-			"status":       pipeline.Status,
+			"description": pipeline.Description,
+			"labels":      pipeline.Labels,
+			"annotations": pipeline.Annotations,
+			"status":      pipeline.Status,
 		}
 	}
 
@@ -162,13 +162,13 @@ func (t *PipelinesToolset) handlePipelineGet(params api.ToolHandlerParams) (*api
 	}
 
 	result := map[string]interface{}{
-		"name":         pipeline.Name,
-		"namespace":    pipeline.Namespace,
+		"name":        pipeline.Name,
+		"namespace":   pipeline.Namespace,
 		"displayName": pipeline.DisplayName,
-		"description":  pipeline.Description,
-		"labels":       pipeline.Labels,
-		"annotations":  pipeline.Annotations,
-		"status":       pipeline.Status,
+		"description": pipeline.Description,
+		"labels":      pipeline.Labels,
+		"annotations": pipeline.Annotations,
+		"status":      pipeline.Status,
 	}
 
 	// Convert to JSON response
@@ -245,14 +245,14 @@ func (t *PipelinesToolset) handlePipelineCreate(params api.ToolHandlerParams) (*
 	}
 
 	result := map[string]interface{}{
-		"name":         createdPipeline.Name,
-		"namespace":    createdPipeline.Namespace,
+		"name":        createdPipeline.Name,
+		"namespace":   createdPipeline.Namespace,
 		"displayName": createdPipeline.DisplayName,
-		"description":  createdPipeline.Description,
-		"labels":       createdPipeline.Labels,
-		"annotations":  createdPipeline.Annotations,
-		"status":       createdPipeline.Status,
-		"message":      "Pipeline created successfully",
+		"description": createdPipeline.Description,
+		"labels":      createdPipeline.Labels,
+		"annotations": createdPipeline.Annotations,
+		"status":      createdPipeline.Status,
+		"message":     "Pipeline created successfully",
 	}
 
 	// Convert to JSON response
@@ -351,14 +351,14 @@ func (t *PipelinesToolset) handlePipelineRunsList(params api.ToolHandlerParams) 
 	response := make([]map[string]interface{}, len(pipelineRuns))
 	for i, pipelineRun := range pipelineRuns {
 		response[i] = map[string]interface{}{
-			"name":          pipelineRun.Name,
+			"name":         pipelineRun.Name,
 			"pipelineName": pipelineRun.PipelineName,
-			"namespace":     pipelineRun.Namespace,
+			"namespace":    pipelineRun.Namespace,
 			"displayName":  pipelineRun.DisplayName,
-			"description":   pipelineRun.Description,
-			"labels":        pipelineRun.Labels,
-			"annotations":   pipelineRun.Annotations,
-			"status":        pipelineRun.Status,
+			"description":  pipelineRun.Description,
+			"labels":       pipelineRun.Labels,
+			"annotations":  pipelineRun.Annotations,
+			"status":       pipelineRun.Status,
 		}
 	}
 
@@ -408,14 +408,14 @@ func (t *PipelinesToolset) handlePipelineRunGet(params api.ToolHandlerParams) (*
 	}
 
 	result := map[string]interface{}{
-		"name":          pipelineRun.Name,
+		"name":         pipelineRun.Name,
 		"pipelineName": pipelineRun.PipelineName,
-		"namespace":     pipelineRun.Namespace,
+		"namespace":    pipelineRun.Namespace,
 		"displayName":  pipelineRun.DisplayName,
-		"description":   pipelineRun.Description,
-		"labels":        pipelineRun.Labels,
-		"annotations":   pipelineRun.Annotations,
-		"status":        pipelineRun.Status,
+		"description":  pipelineRun.Description,
+		"labels":       pipelineRun.Labels,
+		"annotations":  pipelineRun.Annotations,
+		"status":       pipelineRun.Status,
 	}
 
 	// Convert to JSON response
