@@ -74,7 +74,16 @@ jobs:
     - name: Prepare packages
       run: |
         chmod +x ./prepare-fork-npm.sh
-        ./prepare-fork-npm.sh "${{ github.event.inputs.suffix }}"
+        chmod +x ./update-npm-for-fork.sh
+        
+        # Use different preparation based on registry type
+        if [ "${{ github.event.inputs.registry }}" = "github-packages" ]; then
+          echo "🔧 Preparing packages for GitHub Packages with @macayaven namespace..."
+          ./update-npm-for-fork.sh macayaven
+        else
+          echo "🔧 Preparing packages for public npm with suffix ${{ github.event.inputs.suffix }}..."
+          ./prepare-fork-npm.sh "${{ github.event.inputs.suffix }}"
+        fi
 
     - name: Update versions
       run: |
