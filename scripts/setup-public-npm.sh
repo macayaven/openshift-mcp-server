@@ -15,6 +15,9 @@ sed -i.bak 's|"repository": ".*"|"repository": {"type": "git", "url": "git+https
 sed -i.bak 's|"bugs": ".*"|"bugs": {"url": "https://github.com/macayaven/openshift-mcp-server.git/issues"}|g' npm/kubernetes-mcp-server/package.json
 sed -i.bak 's|"homepage": ".*"|"homepage": "https://github.com/macayaven/openshift-mcp-server#readme"|g' npm/kubernetes-mcp-server/package.json
 
+# Use public npm index.js for binary resolution
+cp npm/kubernetes-mcp-server/bin/index.js npm/kubernetes-mcp-server/bin/index-public.js
+
 # Update platform packages
 for platform in darwin-amd64 darwin-arm64 linux-amd64 linux-arm64 windows-amd64 windows-arm64; do
     echo "Updating npm/kubernetes-mcp-server-$platform/package.json..."
