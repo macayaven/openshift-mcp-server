@@ -145,7 +145,7 @@ func (t *DataScienceProjectsToolset) handleDataScienceProjectCreate(params api.T
 	}
 
 	description, _ := args["description"].(string)
-	displayName, _ := args["display_name"].(string)
+	displayName, _ := args["displayName"].(string)
 
 	// Get optional parameters
 	var labels map[string]string

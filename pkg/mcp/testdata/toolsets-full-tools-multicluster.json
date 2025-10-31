@@ -18,8 +18,13 @@
           "description": "Annotations to apply to the application (optional)",
           "type": "object"
         },
-        "app_type": {
-          "description": "Application type (e.g., 'Jupyter', 'CodeServer')",
+        "appType": {
+          "description": "Application type",
+          "enum": [
+            "Jupyter",
+            "CodeServer",
+            "RStudio"
+          ],
           "type": "string"
         },
         "context": {
@@ -30,7 +35,7 @@
           "description": "Description for the application (optional)",
           "type": "string"
         },
-        "display_name": {
+        "displayName": {
           "description": "Display name for the application (optional)",
           "type": "string"
         },
@@ -42,18 +47,20 @@
           "type": "object"
         },
         "name": {
-          "description": "The name of the application",
+          "description": "The name of the application (must be a valid Kubernetes resource name)",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
         "namespace": {
           "description": "The namespace where to create the application",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         }
       },
       "required": [
         "name",
         "namespace",
-        "app_type"
+        "appType"
       ]
     },
     "name": "application_create"
@@ -76,10 +83,12 @@
         },
         "name": {
           "description": "The name of the application",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
         "namespace": {
           "description": "The namespace of the application",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         }
       },
@@ -108,10 +117,12 @@
         },
         "name": {
           "description": "The name of the application",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
         "namespace": {
           "description": "The namespace of the application",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         }
       },
@@ -134,8 +145,13 @@
     "inputSchema": {
       "type": "object",
       "properties": {
-        "app_type": {
-          "description": "Filter by application type (optional, e.g., 'Jupyter', 'CodeServer')",
+        "appType": {
+          "description": "Filter by application type (optional)",
+          "enum": [
+            "Jupyter",
+            "CodeServer",
+            "RStudio"
+          ],
           "type": "string"
         },
         "context": {
@@ -144,10 +160,11 @@
         },
         "namespace": {
           "description": "Namespace to filter applications (optional, defaults to all namespaces)",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
         "status": {
-          "description": "Filter by application status (optional)",
+          "description": "Filter by application status (optional, e.g., 'Running', 'Pending', 'Failed')",
           "type": "string"
         }
       }
@@ -215,7 +232,7 @@
           "description": "A description for the Data Science Project (optional)",
           "type": "string"
         },
-        "display_name": {
+        "displayName": {
           "description": "A display name for the Data Science Project (optional)",
           "type": "string"
         },
@@ -228,10 +245,12 @@
         },
         "name": {
           "description": "The name of the Data Science Project",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
         "namespace": {
           "description": "The namespace where to create the Data Science Project",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         }
       },
@@ -260,10 +279,12 @@
         },
         "name": {
           "description": "The name of the Data Science Project",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
         "namespace": {
           "description": "The namespace of the Data Science Project",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         }
       },
@@ -292,10 +313,12 @@
         },
         "name": {
           "description": "The name of the Data Science Project",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
         "namespace": {
           "description": "The namespace of the Data Science Project",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         }
       },
@@ -324,6 +347,7 @@
         },
         "namespace": {
           "description": "The namespace to search for Data Science Projects (optional, defaults to all namespaces)",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         }
       }
@@ -381,7 +405,7 @@
           "description": "Description for the experiment (optional)",
           "type": "string"
         },
-        "display_name": {
+        "displayName": {
           "description": "Display name for the experiment (optional)",
           "type": "string"
         },
@@ -394,10 +418,12 @@
         },
         "name": {
           "description": "The name of the experiment",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
         "namespace": {
           "description": "The namespace where to create the experiment",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         }
       },
@@ -426,10 +452,12 @@
         },
         "name": {
           "description": "The name of experiment",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
         "namespace": {
           "description": "The namespace of the experiment",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         }
       },
@@ -458,10 +486,12 @@
         },
         "name": {
           "description": "The name of the experiment",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
         "namespace": {
           "description": "The namespace of the experiment",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         }
       },
@@ -490,6 +520,7 @@
         },
         "namespace": {
           "description": "Namespace to filter experiments (optional, defaults to all namespaces)",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
         "status": {
@@ -625,7 +656,7 @@
           "description": "A description for the model (optional)",
           "type": "string"
         },
-        "display_name": {
+        "displayName": {
           "description": "A display name for the model (optional)",
           "type": "string"
         },
@@ -633,7 +664,7 @@
           "description": "The model format (e.g., pickle, onnx, savedmodel)",
           "type": "string"
         },
-        "framework_version": {
+        "frameworkVersion": {
           "description": "The framework version (optional)",
           "type": "string"
         },
@@ -644,16 +675,18 @@
           "description": "Labels to apply to the model (optional)",
           "type": "object"
         },
-        "model_type": {
+        "modelType": {
           "description": "The model type (e.g., pytorch, tensorflow, sklearn)",
           "type": "string"
         },
         "name": {
           "description": "The name of the model",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
         "namespace": {
           "description": "The namespace where to create the model",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
         "version": {
@@ -664,7 +697,7 @@
       "required": [
         "name",
         "namespace",
-        "model_type",
+        "modelType",
         "format"
       ]
     },
@@ -688,10 +721,12 @@
         },
         "name": {
           "description": "The name of the model",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
         "namespace": {
           "description": "The namespace of the model",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         }
       },
@@ -720,10 +755,12 @@
         },
         "name": {
           "description": "The name of the model",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
         "namespace": {
           "description": "The namespace of the model",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         }
       },
@@ -761,7 +798,7 @@
           "description": "A description for the model (optional)",
           "type": "string"
         },
-        "display_name": {
+        "displayName": {
           "description": "A display name for the model (optional)",
           "type": "string"
         },
@@ -774,10 +811,12 @@
         },
         "name": {
           "description": "The name of the model",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
         "namespace": {
           "description": "The namespace of the model",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         }
       },
@@ -804,16 +843,24 @@
           "description": "Optional parameter selecting which context to run the tool in. Defaults to fake-context if not set",
           "type": "string"
         },
-        "model_type": {
-          "description": "Filter models by type (e.g., pytorch, tensorflow, sklearn)",
+        "modelType": {
+          "description": "Filter models by type",
+          "enum": [
+            "pytorch",
+            "tensorflow",
+            "sklearn",
+            "onnx",
+            "xgboost"
+          ],
           "type": "string"
         },
         "namespace": {
           "description": "The namespace to search for models (optional, defaults to all namespaces)",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
         "status": {
-          "description": "Filter models by status (e.g., Ready, Pending, Failed)",
+          "description": "Filter models by status (e.g., 'Ready', 'Pending', 'Failed')",
           "type": "string"
         }
       }
@@ -932,7 +979,7 @@
           "description": "Description for the pipeline (optional)",
           "type": "string"
         },
-        "display_name": {
+        "displayName": {
           "description": "Display name for the pipeline (optional)",
           "type": "string"
         },
@@ -945,10 +992,12 @@
         },
         "name": {
           "description": "The name of the pipeline",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
         "namespace": {
           "description": "The namespace where to create the pipeline",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         }
       },
@@ -977,10 +1026,12 @@
         },
         "name": {
           "description": "The name of the pipeline",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
         "namespace": {
           "description": "The namespace of the pipeline",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         }
       },
@@ -1009,10 +1060,12 @@
         },
         "name": {
           "description": "The name of the pipeline",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
         "namespace": {
           "description": "The namespace of the pipeline",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         }
       },
@@ -1041,10 +1094,12 @@
         },
         "name": {
           "description": "The name of the pipeline run",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
         "namespace": {
           "description": "The namespace of the pipeline run",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         }
       },
@@ -1073,9 +1128,10 @@
         },
         "namespace": {
           "description": "Namespace to filter pipeline runs (optional, defaults to all namespaces)",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
-        "pipeline_name": {
+        "pipelineName": {
           "description": "Filter by pipeline name (optional)",
           "type": "string"
         },
@@ -1105,6 +1161,7 @@
         },
         "namespace": {
           "description": "Namespace to filter pipelines (optional, defaults to all namespaces)",
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
           "type": "string"
         },
         "status": {

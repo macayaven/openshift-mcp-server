@@ -148,7 +148,7 @@ func (t *ExperimentsToolset) handleExperimentCreate(params api.ToolHandlerParams
 
 	// Optional parameters
 	var displayName *string
-	if val, exists := args["display_name"]; exists {
+	if val, exists := args["displayName"]; exists {
 		if str, ok := val.(string); ok && str != "" {
 			displayName = &str
 		}
