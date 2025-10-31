@@ -162,6 +162,9 @@ jobs:
         cat > ~/.npmrc << EOF
         ${{ needs.determine-packages.outputs.npm-config }}
         EOF
+        
+        # Debug: Show the .npmrc content (without secrets)
+        echo "🔧 .npmrc configured for registry: ${{ needs.determine-packages.outputs.registry-url }}"
 
     - name: Extract platform from package name
       id: extract
@@ -205,6 +208,9 @@ jobs:
         cat > ~/.npmrc << EOF
         ${{ needs.determine-packages.outputs.npm-config }}
         EOF
+        
+        # Debug: Show the .npmrc content (without secrets)
+        echo "🔧 .npmrc configured for registry: ${{ needs.determine-packages.outputs.registry-url }}"
 
     - name: Copy required files
       run: |
