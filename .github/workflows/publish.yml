@@ -1,5 +1,9 @@
 name: Publish Packages
 
+permissions:
+  contents: write
+  packages: write
+
 on:
   workflow_dispatch:
     inputs:
@@ -55,7 +59,9 @@ jobs:
         if [ "${{ github.event.inputs.registry }}" = "github-packages" ]; then
           MAIN_PACKAGE="@macayaven/kubernetes-mcp-server"
           REGISTRY_URL="https://npm.pkg.github.com/"
-          NPM_CONFIG="//npm.pkg.github.com/:_authToken=${{ secrets.NPM_TOKEN }}"
+          # Use GITHUB_TOKEN for GitHub Packages (requires write:packages permission)
+          NPM_CONFIG="//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}"
+          echo "Using GITHUB_TOKEN for GitHub Packages authentication"
           
           # Prepare GitHub Packages
           ./scripts/setup-github-packages.sh macayaven
