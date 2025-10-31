@@ -1,22 +1,19 @@
 {
-  "name": "@macayaven/kubernetes-mcp-server-windows-arm64",
+  "name": "kubernetes-mcp-server-openshift-ai-windows-arm64",
   "version": "0.0.53-127-gee20cd9",
-  "description": "Model Context Protocol (MCP) server for Kubernetes and OpenShift",
+  "description": "Model Context Protocol (MCP) server for Kubernetes and OpenShift (fork with OpenShift AI support)",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/macayaven/openshift-mcp-server.git"
   },
   "os": [
-    "win32"
+    "windows"
   ],
   "cpu": [
     "arm64"
   ],
   "bugs": {
-    "url": "https://github.com/macayaven/openshift-mcp-server/issues"
+    "url": "https://github.com/macayaven/openshift-mcp-server.git/issues"
   },
-  "homepage": "https://github.com/macayaven/openshift-mcp-server#readme",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  }
+  "homepage": "https://github.com/macayaven/openshift-mcp-server#readme"
 }
