@@ -39,22 +39,40 @@ update_package_json() {
     echo "✓ Updated $package_file"
 }
 
+# Function to update optionalDependencies in main package
+update_optional_dependencies() {
+    local main_package_file="npm/kubernetes-mcp-server/package.json"
+    
+    echo "Updating optionalDependencies in main package..."
+    
+    # Update optionalDependencies to use scoped names
+    jq --arg username "$GITHUB_USERNAME" '
+        .optionalDependencies |= with_entries(.key = "@" + $username + "/" + .key)
+    ' "$main_package_file" > "${main_package_file}.tmp" && mv "${main_package_file}.tmp" "$main_package_file"
+    
+    echo "✓ Updated optionalDependencies"
+}
+
 # Update main package
-update_package_json "npm/kubernetes-mcp-server/package.json" "kubernetes-mcp-server"
+update_package_json "npm/kubernetes-mcp-server/package.json" "@$GITHUB_USERNAME/kubernetes-mcp-server"
 
 # Update platform-specific packages
 platforms=("darwin-amd64" "darwin-arm64" "linux-amd64" "linux-arm64" "windows-amd64" "windows-arm64")
 
 for platform in "${platforms[@]}"; do
     package_name="kubernetes-mcp-server-$platform"
+    scoped_name="@$GITHUB_USERNAME/$package_name"
     package_file="npm/$package_name/package.json"
     
     if [ -f "$package_file" ]; then
-        update_package_json "$package_file" "$package_name"
+        update_package_json "$package_file" "$scoped_name"
     else
         echo "⚠ Package file not found: $package_file"
     fi
 done
+
+# Update optionalDependencies in main package to use scoped names
+update_optional_dependencies
 
 echo ""
 echo "✅ All package.json files updated successfully!"

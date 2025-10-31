@@ -1,6 +1,6 @@
 {
-  "name": "kubernetes-mcp-server-linux-amd64",
-  "version": "0.0.0",
+  "name": "@macayaven/kubernetes-mcp-server-linux-amd64",
+  "version": "0.0.53-127-gee20cd9",
   "description": "Model Context Protocol (MCP) server for Kubernetes and OpenShift",
   "repository": {
     "type": "git",

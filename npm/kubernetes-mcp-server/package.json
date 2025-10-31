@@ -1,18 +1,18 @@
 {
-  "name": "kubernetes-mcp-server",
-  "version": "0.0.0",
+  "name": "@macayaven/kubernetes-mcp-server",
+  "version": "0.0.53-127-gee20cd9",
   "description": "Model Context Protocol (MCP) server for Kubernetes and OpenShift",
   "main": "./bin/index.js",
   "bin": {
     "kubernetes-mcp-server": "bin/index.js"
   },
   "optionalDependencies": {
-    "kubernetes-mcp-server-darwin-amd64": "0.0.0",
-    "kubernetes-mcp-server-darwin-arm64": "0.0.0",
-    "kubernetes-mcp-server-linux-amd64": "0.0.0",
-    "kubernetes-mcp-server-linux-arm64": "0.0.0",
-    "kubernetes-mcp-server-windows-amd64": "0.0.0",
-    "kubernetes-mcp-server-windows-arm64": "0.0.0"
+    "@macayaven/kubernetes-mcp-server-darwin-amd64": "0.0.53-127-gee20cd9",
+    "@macayaven/kubernetes-mcp-server-darwin-arm64": "0.0.53-127-gee20cd9",
+    "@macayaven/kubernetes-mcp-server-linux-amd64": "0.0.53-127-gee20cd9",
+    "@macayaven/kubernetes-mcp-server-linux-arm64": "0.0.53-127-gee20cd9",
+    "@macayaven/kubernetes-mcp-server-windows-amd64": "0.0.53-127-gee20cd9",
+    "@macayaven/kubernetes-mcp-server-windows-arm64": "0.0.53-127-gee20cd9"
   },
   "repository": {
     "type": "git",
