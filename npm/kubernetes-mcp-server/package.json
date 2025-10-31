@@ -7,12 +7,9 @@
     "kubernetes-mcp-server": "bin/index.js"
   },
   "optionalDependencies": {
-    "kubernetes-mcp-server-openshift-ai-complete-darwin-amd64": "0.0.53-127-gee20cd9",
     "kubernetes-mcp-server-openshift-ai-complete-darwin-arm64": "0.0.53-127-gee20cd9",
     "kubernetes-mcp-server-openshift-ai-complete-linux-amd64": "0.0.53-127-gee20cd9",
-    "kubernetes-mcp-server-openshift-ai-complete-linux-arm64": "0.0.53-127-gee20cd9",
-    "kubernetes-mcp-server-openshift-ai-complete-windows-amd64": "0.0.53-127-gee20cd9",
-    "kubernetes-mcp-server-openshift-ai-complete-windows-arm64": "0.0.53-127-gee20cd9"
+    "kubernetes-mcp-server-openshift-ai-complete-linux-arm64": "0.0.53-127-gee20cd9"
   },
   "repository": {
     "type": "git",

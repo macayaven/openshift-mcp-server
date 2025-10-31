@@ -18,8 +18,8 @@ sed -i.bak 's|"homepage": ".*"|"homepage": "https://github.com/macayaven/openshi
 # Use public npm index.js for binary resolution
 cp npm/kubernetes-mcp-server/bin/index.js npm/kubernetes-mcp-server/bin/index-public.js
 
-# Update platform packages
-for platform in darwin-amd64 darwin-arm64 linux-amd64 linux-arm64 windows-amd64 windows-arm64; do
+# Update platform packages (modern architectures only)
+for platform in darwin-arm64 linux-amd64 linux-arm64; do
     echo "Updating npm/kubernetes-mcp-server-$platform/package.json..."
     sed -i.bak 's|"name": ".*"|"name": "kubernetes-mcp-server-'$SUFFIX'-'$platform'"|g' "npm/kubernetes-mcp-server-$platform/package.json"
     sed -i.bak 's|"repository": ".*"|"repository": {"type": "git", "url": "git+https://github.com/macayaven/openshift-mcp-server.git"}|g' "npm/kubernetes-mcp-server-$platform/package.json"
@@ -31,17 +31,14 @@ done
 echo "Updating optionalDependencies in main package..."
 VERSION=$(cat npm/kubernetes-mcp-server/package.json | grep '"version"' | cut -d'"' -f4)
 
-# Create optional dependencies JSON
+# Create optional dependencies JSON (modern architectures only)
 TEMP_FILE=$(mktemp -t deps.XXXXXX.json)
 cat > "$TEMP_FILE" << EOF
 {
   "optionalDependencies": {
-    "kubernetes-mcp-server-$SUFFIX-darwin-amd64": "$VERSION",
     "kubernetes-mcp-server-$SUFFIX-darwin-arm64": "$VERSION",
     "kubernetes-mcp-server-$SUFFIX-linux-amd64": "$VERSION",
-    "kubernetes-mcp-server-$SUFFIX-linux-arm64": "$VERSION",
-    "kubernetes-mcp-server-$SUFFIX-windows-amd64": "$VERSION",
-    "kubernetes-mcp-server-$SUFFIX-windows-arm64": "$VERSION"
+    "kubernetes-mcp-server-$SUFFIX-linux-arm64": "$VERSION"
   }
 }
 EOF

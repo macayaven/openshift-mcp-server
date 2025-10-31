@@ -23,7 +23,7 @@ on:
       architectures:
         description: 'Target architectures (comma-separated)'
         required: false
-        default: 'darwin-amd64,darwin-arm64,linux-amd64,linux-arm64,windows-amd64,windows-arm64'
+        default: 'darwin-arm64,linux-amd64,linux-arm64'
         type: string
       container:
         description: 'Also publish container image'
