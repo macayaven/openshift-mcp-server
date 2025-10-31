@@ -1,5 +1,5 @@
 {
-  "name": "@macayaven/kubernetes-mcp-server-darwin-amd64",
+  "name": "kubernetes-mcp-server-openshift-ai-complete-darwin-amd64",
   "version": "0.0.53-127-gee20cd9",
   "description": "Model Context Protocol (MCP) server for Kubernetes and OpenShift (fork with OpenShift AI support)",
   "repository": {
