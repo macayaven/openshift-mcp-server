@@ -3,19 +3,19 @@
 const childProcess = require('child_process');
 
 const BINARY_MAP = {
-  darwin_x64: {name: 'kubernetes-mcp-server-openshift-ai-darwin-amd64', suffix: ''},
-  darwin_arm64: {name: 'kubernetes-mcp-server-openshift-ai-darwin-arm64', suffix: ''},
-  linux_x64: {name: 'kubernetes-mcp-server-openshift-ai-linux-amd64', suffix: ''},
-  linux_arm64: {name: 'kubernetes-mcp-server-openshift-ai-linux-arm64', suffix: ''},
-  win32_x64: {name: 'kubernetes-mcp-server-openshift-ai-windows-amd64', suffix: '.exe'},
-  win32_arm64: {name: 'kubernetes-mcp-server-openshift-ai-windows-arm64', suffix: '.exe'},
+  darwin_x64: {name: 'kubernetes-mcp-server-openshift-ai-darwin-amd64', binary: 'kubernetes-mcp-server-darwin-amd64', suffix: ''},
+  darwin_arm64: {name: 'kubernetes-mcp-server-openshift-ai-darwin-arm64', binary: 'kubernetes-mcp-server-darwin-arm64', suffix: ''},
+  linux_x64: {name: 'kubernetes-mcp-server-openshift-ai-linux-amd64', binary: 'kubernetes-mcp-server-linux-amd64', suffix: ''},
+  linux_arm64: {name: 'kubernetes-mcp-server-openshift-ai-linux-arm64', binary: 'kubernetes-mcp-server-linux-arm64', suffix: ''},
+  win32_x64: {name: 'kubernetes-mcp-server-openshift-ai-windows-amd64', binary: 'kubernetes-mcp-server-windows-amd64', suffix: '.exe'},
+  win32_arm64: {name: 'kubernetes-mcp-server-openshift-ai-windows-arm64', binary: 'kubernetes-mcp-server-windows-arm64', suffix: '.exe'},
 };
 
 // Resolving will fail if optionalDependency was not installed or platform/arch is not supported
 const resolveBinaryPath = () => {
   try {
     const binary = BINARY_MAP[`${process.platform}_${process.arch}`];
-    return require.resolve(`${binary.name}/bin/${binary.name}${binary.suffix}`);
+    return require.resolve(`${binary.name}/bin/${binary.binary}${binary.suffix}`);
   } catch (e) {
     throw new Error(`Could not resolve binary path for platform/arch: ${process.platform}/${process.arch}`);
   }

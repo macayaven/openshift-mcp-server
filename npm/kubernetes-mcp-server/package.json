@@ -7,18 +7,18 @@
     "kubernetes-mcp-server": "bin/index.js"
   },
   "optionalDependencies": {
-    "kubernetes-mcp-server-openshift-ai-darwin-amd64": "0.0.53-127-gee20cd9",
-    "kubernetes-mcp-server-openshift-ai-darwin-arm64": "0.0.53-127-gee20cd9",
-    "kubernetes-mcp-server-openshift-ai-linux-amd64": "0.0.53-127-gee20cd9",
-    "kubernetes-mcp-server-openshift-ai-linux-arm64": "0.0.53-127-gee20cd9",
-    "kubernetes-mcp-server-openshift-ai-windows-amd64": "0.0.53-127-gee20cd9",
-    "kubernetes-mcp-server-openshift-ai-windows-arm64": "0.0.53-127-gee20cd9",
     "@macayaven/kubernetes-mcp-server-darwin-amd64": "0.0.53-127-gee20cd9",
     "@macayaven/kubernetes-mcp-server-darwin-arm64": "0.0.53-127-gee20cd9",
     "@macayaven/kubernetes-mcp-server-linux-amd64": "0.0.53-127-gee20cd9",
     "@macayaven/kubernetes-mcp-server-linux-arm64": "0.0.53-127-gee20cd9",
     "@macayaven/kubernetes-mcp-server-windows-amd64": "0.0.53-127-gee20cd9",
-    "@macayaven/kubernetes-mcp-server-windows-arm64": "0.0.53-127-gee20cd9"
+    "@macayaven/kubernetes-mcp-server-windows-arm64": "0.0.53-127-gee20cd9",
+    "kubernetes-mcp-server-openshift-ai-darwin-amd64": "0.0.53-127-gee20cd9",
+    "kubernetes-mcp-server-openshift-ai-darwin-arm64": "file:../kubernetes-mcp-server-darwin-arm64",
+    "kubernetes-mcp-server-openshift-ai-linux-amd64": "0.0.53-127-gee20cd9",
+    "kubernetes-mcp-server-openshift-ai-linux-arm64": "0.0.53-127-gee20cd9",
+    "kubernetes-mcp-server-openshift-ai-windows-amd64": "0.0.53-127-gee20cd9",
+    "kubernetes-mcp-server-openshift-ai-windows-arm64": "0.0.53-127-gee20cd9"
   },
   "repository": {
     "type": "git",
