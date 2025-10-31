@@ -91,8 +91,15 @@ jobs:
         platforms=("darwin-amd64" "darwin-arm64" "linux-amd64" "linux-arm64" "windows-amd64" "windows-arm64")
         
         for platform in "${platforms[@]}"; do
-          package_name="kubernetes-mcp-server-${{ github.event.inputs.suffix }}-$platform"
-          echo "📦 Publishing $package_name..."
+          # Directory name is always kubernetes-mcp-server-$platform
+          # Package name depends on registry type
+          if [ "${{ github.event.inputs.registry }}" = "github-packages" ]; then
+            package_name="@macayaven/kubernetes-mcp-server-$platform"
+          else
+            package_name="kubernetes-mcp-server-${{ github.event.inputs.suffix }}-$platform"
+          fi
+          
+          echo "📦 Publishing $package_name from directory kubernetes-mcp-server-$platform..."
           
           cd "npm/kubernetes-mcp-server-$platform"
           npm publish --tag latest
@@ -109,10 +116,19 @@ jobs:
         cp README.md LICENSE npm/kubernetes-mcp-server/
         
         cd npm/kubernetes-mcp-server
+        
+        # Package name depends on registry type
+        if [ "${{ github.event.inputs.registry }}" = "github-packages" ]; then
+          package_name="@macayaven/kubernetes-mcp-server"
+        else
+          package_name="kubernetes-mcp-server-${{ github.event.inputs.suffix }}"
+        fi
+        
+        echo "📦 Publishing $package_name..."
         npm publish --tag latest
         cd ../..
         
-        echo "✅ Published main package"
+        echo "✅ Published main package: $package_name"
 
     - name: Summary
       run: |
@@ -120,7 +136,11 @@ jobs:
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "### 📦 Package Details" >> $GITHUB_STEP_SUMMARY
         echo "- **Registry**: ${{ github.event.inputs.registry }}" >> $GITHUB_STEP_SUMMARY
-        echo "- **Package**: `kubernetes-mcp-server-${{ github.event.inputs.suffix }}`" >> $GITHUB_STEP_SUMMARY
+        if [ "${{ github.event.inputs.registry }}" = "github-packages" ]; then
+          echo "- **Package**: `@macayaven/kubernetes-mcp-server`" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "- **Package**: `kubernetes-mcp-server-${{ github.event.inputs.suffix }}`" >> $GITHUB_STEP_SUMMARY
+        fi
         echo "- **Version**: ${{ steps.version.outputs.version }}" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "### 🚀 Installation" >> $GITHUB_STEP_SUMMARY
