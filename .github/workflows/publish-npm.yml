@@ -57,9 +57,19 @@ jobs:
     - name: Get version
       id: version
       run: |
-        VERSION=$(git describe --tags --always --dirty)
+        # Try to get version from git tags, fallback to base version + commit hash
+        VERSION=$(git describe --tags --always --dirty 2>/dev/null || echo "v0.0.53")
+        
+        # If VERSION is just a commit hash, create a proper version
+        if [[ $VERSION =~ ^[0-9a-f]{7,}$ ]]; then
+          VERSION="v0.0.53-${VERSION}"
+        fi
+        
+        # Remove 'v' prefix for npm version
+        NPM_VERSION=$(echo $VERSION | sed 's/^v//')
+        
         echo "version=$VERSION" >> $GITHUB_OUTPUT
-        echo "npm_version=$(echo $VERSION | sed 's/^v//')" >> $GITHUB_OUTPUT
+        echo "npm_version=$NPM_VERSION" >> $GITHUB_OUTPUT
 
     - name: Prepare packages
       run: |
@@ -69,6 +79,27 @@ jobs:
     - name: Update versions
       run: |
         find npm -name "package.json" -exec sed -i 's/"version": ".*"/"version": "${{ steps.version.outputs.npm_version }}"/' {} \;
+
+    - name: Validate versions
+      run: |
+        echo "🔍 Validating package versions..."
+        
+        # Check main package
+        MAIN_VERSION=$(cat npm/kubernetes-mcp-server/package.json | grep '"version"' | cut -d'"' -f4)
+        echo "Main package version: $MAIN_VERSION"
+        
+        # Check platform packages
+        for platform in "darwin-amd64" "darwin-arm64" "linux-amd64" "linux-arm64" "windows-amd64" "windows-arm64"; do
+          PLATFORM_VERSION=$(cat "npm/kubernetes-mcp-server-$platform/package.json" | grep '"version"' | cut -d'"' -f4)
+          echo "Platform $platform version: $PLATFORM_VERSION"
+          
+          if [ "$MAIN_VERSION" != "$PLATFORM_VERSION" ]; then
+            echo "❌ Version mismatch: main ($MAIN_VERSION) vs $platform ($PLATFORM_VERSION)"
+            exit 1
+          fi
+        done
+        
+        echo "✅ All package versions are consistent: $MAIN_VERSION"
 
     - name: Build
       run: |
