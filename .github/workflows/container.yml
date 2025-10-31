@@ -1,0 +1,91 @@
+name: Publish Container Image
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Image tag (default: latest)'
+        required: false
+        default: 'latest'
+        type: string
+      platforms:
+        description: 'Target platforms (comma-separated)'
+        required: false
+        default: 'linux/amd64,linux/arm64'
+        type: string
+
+env:
+  # Fork attribution: This is a fork of containers/kubernetes-mcp-server enhanced with OpenShift AI support
+  # Original project: https://github.com/containers/kubernetes-mcp-server by Marc Nuri
+  # This fork adds OpenShift AI capabilities while maintaining full compatibility with the original
+  IMAGE_NAME: quay.io/macayaven/kubernetes_mcp_server_openshift_ai
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup Podman
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y podman
+
+    - name: Login to Quay
+      run: |
+        # Using fork maintainer's registry credentials
+        echo "${{ secrets.QUAY_PASSWORD }}" | podman login quay.io -u "${{ secrets.QUAY_USERNAME }}" --password-stdin
+
+    - name: Parse platforms
+      id: platforms
+      run: |
+        IFS=',' read -ra PLATFORMS <<< "${{ github.event.inputs.platforms }}"
+        echo "platforms=$(printf '%s\n' "${PLATFORMS[@]}" | jq -R . | jq -s . | jq -c .)" >> $GITHUB_OUTPUT
+
+    - name: Build and push images
+      run: |
+        # Create manifest
+        podman manifest create "${{ env.IMAGE_NAME }}:${{ github.event.inputs.tag }}"
+        
+        # Build for each platform
+        for platform in ${{ steps.platforms.outputs.platforms }}; do
+          echo "🏗️ Building for $platform..."
+          
+          podman build \
+            --platform "$platform" \
+            -f Dockerfile \
+            -t "${{ env.IMAGE_NAME }}:${{ github.event.inputs.tag }}-${platform//\//-}" \
+            .
+          
+          podman push "${{ env.IMAGE_NAME }}:${{ github.event.inputs.tag }}-${platform//\//-}"
+          
+          # Add to manifest
+          podman manifest add "${{ env.IMAGE_NAME }}:${{ github.event.inputs.tag }}" \
+            "docker://${{ env.IMAGE_NAME }}:${{ github.event.inputs.tag }}-${platform//\//-}"
+        done
+        
+        # Push manifest
+        echo "📦 Pushing multi-architecture manifest..."
+        podman manifest push "${{ env.IMAGE_NAME }}:${{ github.event.inputs.tag }}"
+
+    - name: Summary
+      run: |
+        echo "## 🐳 Container Publishing Complete!" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### 📦 Image Details" >> $GITHUB_STEP_SUMMARY
+        echo "- **Registry**: quay.io" >> $GITHUB_STEP_SUMMARY
+        echo "- **Image**: `${{ env.IMAGE_NAME }}`" >> $GITHUB_STEP_SUMMARY
+        echo "- **Tag**: `${{ github.event.inputs.tag }}`" >> $GITHUB_STEP_SUMMARY
+        echo "- **Platforms**: ${{ github.event.inputs.platforms }}" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### 🚀 Usage" >> $GITHUB_STEP_SUMMARY
+        echo '```bash' >> $GITHUB_STEP_SUMMARY
+        echo "# Pull the image" >> $GITHUB_STEP_SUMMARY
+        echo "podman pull ${{ env.IMAGE_NAME }}:${{ github.event.inputs.tag }}" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "# Run with kubeconfig" >> $GITHUB_STEP_SUMMARY
+        echo "podman run -it --rm \\" >> $GITHUB_STEP_SUMMARY
+        echo "  -v ~/.kube/config:/root/.kube/config:ro \\" >> $GITHUB_STEP_SUMMARY
+        echo "  ${{ env.IMAGE_NAME }}:${{ github.event.inputs.tag }}" >> $GITHUB_STEP_SUMMARY
+        echo '```' >> $GITHUB_STEP_SUMMARY

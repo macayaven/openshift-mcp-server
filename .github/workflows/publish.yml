@@ -1,0 +1,334 @@
+name: Publish Packages
+
+on:
+  workflow_dispatch:
+    inputs:
+      registry:
+        description: 'Target registry'
+        required: true
+        default: 'public'
+        type: choice
+        options:
+        - public
+        - github-packages
+      suffix:
+        description: 'Package suffix for public npm (e.g., openshift-ai)'
+        required: false
+        default: 'openshift-ai'
+        type: string
+      architectures:
+        description: 'Target architectures (comma-separated)'
+        required: false
+        default: 'darwin-amd64,darwin-arm64,linux-amd64,linux-arm64,windows-amd64,windows-arm64'
+        type: string
+      container:
+        description: 'Also publish container image'
+        required: false
+        default: false
+        type: boolean
+      version_override:
+        description: 'Override version (optional, uses git tag otherwise)'
+        required: false
+        type: string
+
+jobs:
+  determine-packages:
+    runs-on: ubuntu-latest
+    outputs:
+      main-package: ${{ steps.setup.outputs.main-package }}
+      platform-packages: ${{ steps.setup.outputs.platform-packages }}
+      registry-url: ${{ steps.setup.outputs.registry-url }}
+      npm-config: ${{ steps.setup.outputs.npm-config }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Setup publishing
+      id: setup
+      run: |
+        # Parse architectures
+        IFS=',' read -ra ARCHS <<< "${{ github.event.inputs.architectures }}"
+        
+        # Determine package names and registry
+        if [ "${{ github.event.inputs.registry }}" = "github-packages" ]; then
+          MAIN_PACKAGE="@macayaven/kubernetes-mcp-server"
+          REGISTRY_URL="https://npm.pkg.github.com/"
+          NPM_CONFIG="//npm.pkg.github.com/:_authToken=${{ secrets.NPM_TOKEN }}"
+          
+          # Prepare GitHub Packages
+          ./scripts/setup-github-packages.sh macayaven
+          
+          echo "Platform packages:"
+          for arch in "${ARCHS[@]}"; do
+            echo "  @macayaven/kubernetes-mcp-server-$arch"
+          done
+          
+          # Create JSON output for platform packages
+          PLATFORMS=$(printf '%s\n' "${ARCHS[@]}" | jq -R . | jq -s . | jq -c 'map("@macayaven/kubernetes-mcp-server-" + .)')
+          echo "platform-packages=$PLATFORMS" >> $GITHUB_OUTPUT
+        else
+          MAIN_PACKAGE="kubernetes-mcp-server-${{ github.event.inputs.suffix }}"
+          REGISTRY_URL="https://registry.npmjs.org/"
+          NPM_CONFIG="//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}"
+          
+          # Prepare public npm packages
+          ./scripts/setup-public-npm.sh "${{ github.event.inputs.suffix }}"
+          
+          echo "Platform packages:"
+          for arch in "${ARCHS[@]}"; do
+            echo "  kubernetes-mcp-server-${{ github.event.inputs.suffix }}-$arch"
+          done
+          
+          # Create JSON output for platform packages
+          PLATFORMS=$(printf '%s\n' "${ARCHS[@]}" | jq -R . | jq -s . | jq -c 'map("kubernetes-mcp-server-${{ github.event.inputs.suffix }}-" + .)')
+          echo "platform-packages=$PLATFORMS" >> $GITHUB_OUTPUT
+        fi
+        
+        echo "main-package=$MAIN_PACKAGE" >> $GITHUB_OUTPUT
+        echo "registry-url=$REGISTRY_URL" >> $GITHUB_OUTPUT
+        echo "npm-config=$NPM_CONFIG" >> $GITHUB_OUTPUT
+
+  build:
+    runs-on: ubuntu-latest
+    needs: determine-packages
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      npm-version: ${{ steps.version.outputs.npm-version }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Setup Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.24'
+
+    - name: Get version
+      id: version
+      run: |
+        if [ -n "${{ github.event.inputs.version_override }}" ]; then
+          VERSION="${{ github.event.inputs.version_override }}"
+          echo "Using override version: $VERSION"
+        else
+          VERSION=$(git describe --tags --always --dirty 2>/dev/null || echo "v0.0.53")
+          if [[ $VERSION =~ ^[0-9a-f]{7,}$ ]]; then
+            VERSION="v0.0.53-${VERSION}"
+          fi
+          echo "Using git version: $VERSION"
+        fi
+        
+        # Remove 'v' prefix for npm version
+        NPM_VERSION=$(echo $VERSION | sed 's/^v//')
+        
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        echo "npm-version=$NPM_VERSION" >> $GITHUB_OUTPUT
+
+    - name: Update package versions
+      run: |
+        find npm -name "package.json" -exec sed -i 's/"version": ".*"/"version": "${{ steps.version.outputs.npm-version }}"/' {} \;
+
+    - name: Build all platforms
+      run: |
+        make build-all-platforms
+
+    - name: Copy binaries
+      run: |
+        make npm-copy-binaries
+
+  publish-platforms:
+    runs-on: ubuntu-latest
+    needs: [determine-packages, build]
+    if: needs.determine-packages.outputs.platform-packages != '[]'
+    strategy:
+      fail-fast: false
+      matrix:
+        package: ${{ fromJson(needs.determine-packages.outputs.platform-packages) }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        registry-url: ${{ needs.determine-packages.outputs.registry-url }}
+
+    - name: Setup .npmrc
+      run: |
+        cat > ~/.npmrc << EOF
+        ${{ needs.determine-packages.outputs.npm-config }}
+        EOF
+
+    - name: Extract platform from package name
+      id: extract
+      run: |
+        PACKAGE="${{ matrix.package }}"
+        if [[ $PACKAGE =~ @macayaven/kubernetes-mcp-server-(.+)$ ]]; then
+          PLATFORM="${BASH_REMATCH[1]}"
+        elif [[ $PACKAGE =~ kubernetes-mcp-server-openshift-ai-(.+)$ ]]; then
+          PLATFORM="${BASH_REMATCH[1]}"
+        else
+          echo "Unknown package format: $PACKAGE"
+          exit 1
+        fi
+        echo "platform=$PLATFORM" >> $GITHUB_OUTPUT
+
+    - name: Publish platform package
+      run: |
+        echo "📦 Publishing ${{ matrix.package }} (platform: ${{ steps.extract.outputs.platform }})..."
+        
+        cd "npm/kubernetes-mcp-server-${{ steps.extract.outputs.platform }}"
+        npm publish --tag latest
+        cd ../..
+        
+        echo "✅ Published ${{ matrix.package }}"
+
+  publish-main:
+    runs-on: ubuntu-latest
+    needs: [determine-packages, build]
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        registry-url: ${{ needs.determine-packages.outputs.registry-url }}
+
+    - name: Setup .npmrc
+      run: |
+        cat > ~/.npmrc << EOF
+        ${{ needs.determine-packages.outputs.npm-config }}
+        EOF
+
+    - name: Copy required files
+      run: |
+        cp README.md LICENSE npm/kubernetes-mcp-server/
+
+    - name: Publish main package
+      run: |
+        echo "📦 Publishing ${{ needs.determine-packages.outputs.main-package }}..."
+        
+        cd npm/kubernetes-mcp-server
+        npm publish --tag latest
+        cd ../..
+        
+        echo "✅ Published ${{ needs.determine-packages.outputs.main-package }}"
+
+  publish-container:
+    runs-on: ubuntu-latest
+    needs: [determine-packages, build]
+    if: github.event.inputs.container == 'true'
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup Podman
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y podman
+
+    - name: Login to Quay
+      run: |
+        echo "${{ secrets.QUAY_PASSWORD }}" | podman login quay.io -u "${{ secrets.QUAY_USERNAME }}" --password-stdin
+
+    - name: Build and push multi-arch image
+      run: |
+        # Create manifest for multi-architecture
+        podman manifest create quay.io/macayaven/kubernetes_mcp_server_openshift_ai:latest
+        
+        # Build and push for each architecture
+        for arch in amd64 arm64; do
+          echo "🏗️ Building for linux/$arch..."
+          
+          podman build \
+            --platform "linux/$arch" \
+            -f Dockerfile \
+            -t "quay.io/macayaven/kubernetes_mcp_server_openshift_ai:latest-linux-$arch" \
+            .
+          
+          podman push "quay.io/macayaven/kubernetes_mcp_server_openshift_ai:latest-linux-$arch"
+          
+          # Add to manifest
+          podman manifest add quay.io/macayaven/kubernetes_mcp_server_openshift_ai:latest \
+            "docker://quay.io/macayaven/kubernetes_mcp_server_openshift_ai:latest-linux-$arch"
+        done
+        
+        # Push manifest
+        echo "📦 Pushing multi-architecture manifest..."
+        podman manifest push quay.io/macayaven/kubernetes_mcp_server_openshift_ai:latest
+
+  summary:
+    runs-on: ubuntu-latest
+    needs: [determine-packages, build, publish-main, publish-platforms, publish-container]
+    if: always()
+    steps:
+    - name: Create summary
+      run: |
+        echo "## 🎉 Publishing Complete!" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### 📦 Package Details" >> $GITHUB_STEP_SUMMARY
+        echo "- **Registry**: ${{ github.event.inputs.registry }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Main Package**: `${{ needs.determine-packages.outputs.main-package }}`" >> $GITHUB_STEP_SUMMARY
+        echo "- **Version**: `${{ needs.build.outputs.version }}`" >> $GITHUB_STEP_SUMMARY
+        echo "- **Architectures**: ${{ github.event.inputs.architectures }}" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        
+        echo "### 🚀 Installation" >> $GITHUB_STEP_SUMMARY
+        if [ "${{ github.event.inputs.registry }}" = "github-packages" ]; then
+          echo '```bash' >> $GITHUB_STEP_SUMMARY
+          echo 'npm config set @macayaven:registry https://npm.pkg.github.com/' >> $GITHUB_STEP_SUMMARY
+          echo 'npm install @macayaven/kubernetes-mcp-server' >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+        else
+          echo '```bash' >> $GITHUB_STEP_SUMMARY
+          echo "npm install kubernetes-mcp-server-${{ github.event.inputs.suffix }}" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+        fi
+        echo "" >> $GITHUB_STEP_SUMMARY
+        
+        if [ "${{ github.event.inputs.container }}" = "true" ]; then
+          echo "### 🐳 Container Image" >> $GITHUB_STEP_SUMMARY
+          echo '```bash' >> $GITHUB_STEP_SUMMARY
+          echo 'podman pull quay.io/macayaven/kubernetes_mcp_server_openshift_ai:latest' >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+        fi
+        
+        echo "### ✅ OpenShift AI Features" >> $GITHUB_STEP_SUMMARY
+        echo "- 📊 Data Science Projects" >> $GITHUB_STEP_SUMMARY
+        echo "- 🤖 Models" >> $GITHUB_STEP_SUMMARY
+        echo "- 🚀 Applications" >> $GITHUB_STEP_SUMMARY
+        echo "- 🧪 Experiments" >> $GITHUB_STEP_SUMMARY
+        echo "- ⚡ Pipelines" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        
+        echo "### 📊 Publishing Status" >> $GITHUB_STEP_SUMMARY
+        if [ "${{ needs.publish-main.result }}" = "success" ]; then
+          echo "✅ Main package: Published" >> $GITHUB_STEP_SUMMARY
+        elif [ "${{ needs.publish-main.result }}" = "failure" ]; then
+          echo "❌ Main package: Failed" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "⏭️ Main package: Skipped" >> $GITHUB_STEP_SUMMARY
+        fi
+        
+        if [ "${{ needs.publish-platforms.result }}" = "success" ]; then
+          echo "✅ Platform packages: Published" >> $GITHUB_STEP_SUMMARY
+        elif [ "${{ needs.publish-platforms.result }}" = "failure" ]; then
+          echo "❌ Platform packages: Failed" >> $GITHUB_STEP_SUMMARY
+        elif [ "${{ needs.publish-platforms.result }}" = "skipped" ]; then
+          echo "⏭️ Platform packages: Skipped" >> $GITHUB_STEP_SUMMARY
+        fi
+        
+        if [ "${{ needs.publish-container.result }}" = "success" ]; then
+          echo "✅ Container image: Published" >> $GITHUB_STEP_SUMMARY
+        elif [ "${{ needs.publish-container.result }}" = "failure" ]; then
+          echo "❌ Container image: Failed" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "⏭️ Container image: Skipped" >> $GITHUB_STEP_SUMMARY
+        fi
